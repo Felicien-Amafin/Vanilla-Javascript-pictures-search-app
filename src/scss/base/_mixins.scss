@@ -1,0 +1,40 @@
+//Breakpoints
+$breakpoints: (
+    'small': '36rem', // ≥576px
+    'medium': '48rem', // ≥768px
+    'large': '62rem', // ≥992p
+    'x-large': '75rem', // ≥1200px
+    'xx-large': '87.5rem', // ≥1400px
+);
+
+@mixin breakpoint($size) {
+	@media (min-width: map-get($breakpoints, $size)) { @content; }
+}
+
+//Flex
+@mixin flexColumnCenter {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+@mixin flexColumn {
+    display: flex;
+    flex-direction: column;
+}
+@mixin flexRowCenter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+@mixin flexRow {
+    display: flex;
+}
+
+//Positioning
+@mixin fixedZero {
+    position: fixed;
+    inset: 0 0 0 0;
+}
+
+

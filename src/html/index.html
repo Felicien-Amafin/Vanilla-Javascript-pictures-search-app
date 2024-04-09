@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+    <title><%= htmlWebpackPlugin.options.title %></title>
+</head>
+<body>
+    <main class="homePage">
+        <section class="mainPage">
+            <div class="mainPage__overlay">
+                <div class="mainPage__flex">
+                    <h1 class="mainPage__title">PIXAVENUE</h1>
+                    <p class="mainPage__slogan">Let's find the incredible</p>
+                </div>
+                <p class="mainPage__advert">Free high quality pictures by talented creators.</p>
+                <button class="mainPage__btn"><i class="fa-solid fa-angle-left"></i></button>
+            </div>
+        </section>
+        <section class="formModal" id="formModal">
+            <button class="closingCross formModal__closingCross" type="button" aria-label="Close window">
+                <i class="fa-solid fa-xmark" title="close"></i>
+            </button>
+            <div class="formWindow">
+                <h2 class="formWindow__title">CONNECTION</h2>
+                <menu class="formMenu">
+                    <li class="formTab hightLight">Sign up</li>
+                    <li class="formTab">Log in</li>
+                </menu>
+                <form class="form">
+                    <input class="formTab form__input " type="text" id="name" placeholder="Name" autocomplete="off">
+                    <input class="formTab form__input " type="text" id="email" placeholder="Email Address" autocomplete="off">
+                    <input class="formTab form__input " type="text" id="password" placeholder="Password" autocomplete="off" >
+                    <button class="form__btn formTab" type="button">Sign up</button>
+                </form>
+            </div>
+        </section>
+    </main>
+    <footer>© 2024 Felicien Amafin</footer>
+</body>
