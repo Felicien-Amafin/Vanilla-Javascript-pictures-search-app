@@ -1,0 +1,30 @@
+.searchBubble {
+    @include flexRow;
+    align-items: center;
+    width: min(100%, 550px);
+    gap: 10px;
+    padding: 10px 15px;
+    border-radius: 30px;
+    background-color: var(--headerSearchBubble);
+    &__icon {
+        @include flexRow;
+        align-items: center;
+        cursor: pointer;
+        color: var(--searchBubbleIcon);
+        background-color: transparent;
+        border: none;
+        font-size: 1rem;
+        &:hover { color: var(--searchBubbleIconHover); }
+    }
+    &__input {
+        height: 100%;
+        width: 100%;
+        background-color: var(--headerSearchBubble);
+        border: none;
+        outline: none;
+        &::placeholder {
+            color: var(--inputPlaceHolder);
+            font-size: 0.875rem;
+        }
+    }
+}

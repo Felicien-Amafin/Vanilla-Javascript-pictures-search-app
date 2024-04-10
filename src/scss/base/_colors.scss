@@ -3,12 +3,14 @@
     --white: white;
     --lightGray: lightgrey;
     --whitesmoke: whitesmoke;
+    //HomePage
     --homeP-overlay:  rgba(0, 0, 0, 0.274);
     --advert: rgb(219, 218, 218);
     --homeP-btnBckGrd:  rgba(211, 211, 211, 0.534);
     --homeP-btnBorder: rgb(129, 129, 129);
     --homeP-btnText: var(--black);
-    --formModal-BckGrd: var(--whitesmoke);
+    --formModal-BckGrd: var(--black);
+    --formWindow-border: rgba(209, 206, 206, 0.445);
     --formWindow-title: rgb(209, 206, 206);
     --form-elBorder:  rgb(209, 206, 206);
     --form-btnBck: transparent;
@@ -17,4 +19,16 @@
     --form-btnTextHover: var(--black);
     --form-hightLightText: rgb(80, 79, 79);
     --form-hightLightMenu: var(--whitesmoke);
+    //UserPage
+    --header: var(--black);
+    --headerBoxShadow: rgba(51, 50, 50, 0.658);
+    --headerTitle: var(--black);
+    --headerSearchIcon: var(--white);
+    --headerSearchBubble: rgb(245, 240, 240);
+    --searchBubbleIcon: rgb(97, 94, 94);
+    --searchBubbleIconHover: rgb(136, 133, 133);
+    --inputPlaceHolder: rgb(136, 134, 134);
+    --headerBtn: var(--white);
+    --headerBtnHover: #c5c5c5;
+    --headerIconHover: #c5c5c5;
 }

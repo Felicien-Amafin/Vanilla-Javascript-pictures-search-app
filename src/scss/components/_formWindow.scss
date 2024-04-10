@@ -10,6 +10,7 @@
     border-radius: 10px;
     overflow-y: auto;
     background-color: var(--black);
+    border: 1px solid var(--formWindow-border);
     @include breakpoint(large) { scale: 0.8 0.8;}
     &__title { 
         color: var(--formWindow-title); 

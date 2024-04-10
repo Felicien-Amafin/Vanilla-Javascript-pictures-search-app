@@ -6,7 +6,36 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
     <title><%= htmlWebpackPlugin.options.title %></title>
 </head>
-<body class="homePage">
-   
-    <p>This is page 2</p>
+<body>
+    <header class="header">
+        <h1 class="header__h1">PIXAVENUE</h1>
+        <button class="header__searchIcon" type="button" title="Search" aria-label="Search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+        <div class="header__searchBubble searchBubble">
+            <button class="searchBubble__icon" type="button" title="Search" aria-label="Search">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+            <input class="searchBubble__input" type="text" placeholder="Enter your search...">
+        </div>
+        <p class="header__userName">Felicien</p>
+        <button class="header__collectionBtn" title="Collection">Collection</button>
+        <button class="header__collectionIcon" type="button" title="Collection" aria-label="Open collection">
+            <i class="fa-regular fa-images"></i>
+        </button>
+        <button class="header__logOutBtn" type="button" title="Log out" aria-label="Log out">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+        </button>
+        <div class="slidingSbubble slidingSbubble__hidden">
+            <div class="searchBubble">
+                <button class="searchBubble__icon" type="button" title="Search" aria-label="Search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+                <input class="searchBubble__input" type="text" placeholder="Enter your search...">
+            </div>
+            <button class="slidingSbubble__cross" type="button" title="Close" aria-label="Close search bubble">
+                <i class="fa-solid fa-xmark" title="Close"></i>
+            </button>
+        </div>
+    </header>
 </body>

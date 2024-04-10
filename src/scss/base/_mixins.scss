@@ -37,4 +37,26 @@ $breakpoints: (
     inset: 0 0 0 0;
 }
 
-
+//Elements
+@mixin headerIcon {
+    color: var(--white);
+    font-size: 1.25rem;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    &:hover { color: var(--headerIconHover); }
+}
+@mixin headerIconHidden {
+    @include breakpoint(medium) {
+        position: fixed;
+        visibility: hidden;
+        opacity: 0;
+    }
+}
+@mixin cross {
+    color:var(--white);
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    &:hover{ color: var(--lightGray); }
+}

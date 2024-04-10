@@ -11,6 +11,7 @@
     &--visible { right: 0; }
     @include breakpoint(large) { position: static; }
     &__closingCross { 
+        color: var(--black);
         @include breakpoint(large) { visibility: hidden;}
     }
 }

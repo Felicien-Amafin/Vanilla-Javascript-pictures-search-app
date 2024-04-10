@@ -3,9 +3,6 @@
     top: 20px;
     right: 20px;
     font-size: 1.125rem;
-    color:var(--white);
-    cursor: pointer;
-    background-color: transparent;
-    border: none;
-    &:hover{ color: var(--lightGray); }
+    @include cross;
 }
+

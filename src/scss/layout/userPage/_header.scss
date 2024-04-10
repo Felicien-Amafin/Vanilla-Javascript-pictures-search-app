@@ -1,0 +1,83 @@
+.header {
+    @include flexRow;
+    align-items: center;
+    justify-content: space-around;
+    min-height: 70px;
+    position: sticky;
+    inset: 0 0 auto 0;
+    z-index: 500000;
+    box-shadow: 1px 1px 1px var(--headerBoxShadow);
+    background-color: var(--header);
+    @include breakpoint(small) {
+        padding: 0 30px;
+        gap: 20px;
+    }
+    &__h1 {
+        color: var(--white);
+        font-size: 1.5625rem;
+        font-weight: 600;
+        @include breakpoint (medium) { font-size: 1.875rem; }
+        @include breakpoint (large) { font-size: 2.1875rem; }
+        cursor: pointer;
+    }
+    &__searchIcon {
+        @include headerIcon;
+        @include headerIconHidden;
+    }
+    &__searchBubble {
+        position: fixed;
+        visibility: hidden;
+        height: 45px;
+        opacity: 0;
+        @include breakpoint(medium) {
+            position: static;
+            visibility: visible;
+            opacity: 1;
+        }
+    }
+    &__userName {
+        color: var(--white);
+        font-size: 0.875rem;
+        font-weight: 600;
+        @include breakpoint(medium) { font-size: 1rem;}
+    }
+    &__collectionBtn {
+        min-width: auto;
+        min-height: 25px;
+        padding: 8px 15px;
+        border-radius: 30px;
+        border: 2px solid var(--white);
+        position: fixed;
+        visibility: hidden;
+        opacity: 0;
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--white);
+        cursor: pointer;
+        background-color: transparent;
+        @include breakpoint(medium) {
+            font-size: 1rem;
+            min-height: 40px;
+            position: static;
+            visibility: visible;
+            opacity: 1;
+        }
+        &:hover {
+            color: var(--headerBtnHover);
+            border: 2px solid var(--headerBtnHover);
+        }
+    }
+    &__collectionIcon {
+        @include headerIcon;
+        @include headerIconHidden;
+    }
+    &__logOutBtn {
+        border: none;
+        background-color: transparent;
+        i {
+            @include headerIcon;
+            @include breakpoint(medium) { font-size: 1.25rem; }
+        }
+    } 
+}
+
