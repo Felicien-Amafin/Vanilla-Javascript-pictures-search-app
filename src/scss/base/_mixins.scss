@@ -60,3 +60,22 @@ $breakpoints: (
     border: none;
     &:hover{ color: var(--lightGray); }
 }
+@mixin bckGrd-img {
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+@mixin h2 {
+    color: var(--white);
+    font-size: 26px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-align: center;
+    line-height: 40px;
+    font-family: "Bebas Neue", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    @include breakpoint(small) { font-size: 28px; }    
+    @include breakpoint(medium) { font-size: 30px; }    
+    @include breakpoint(x-large) { font-size: 34px; }  
+    @include breakpoint(xx-large) { font-size: 36px; }  
+}

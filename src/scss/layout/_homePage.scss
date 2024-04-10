@@ -6,9 +6,8 @@
     .mainPage {
         @include fixedZero;
         background-color: var(--black);
-        background-image: url('/src/img/pic14.jpg');
-        background-size: cover;
-        background-repeat: no-repeat;
+        background-image: url('/src/img/homePage.jpg');
+        @include bckGrd-img;
         background-position: 36% 75%;
         @include breakpoint(large) { position: static; }
         &__overlay {

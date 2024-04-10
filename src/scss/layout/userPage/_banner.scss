@@ -1,0 +1,37 @@
+.banner {
+    width: 90%;
+    height: 300px;
+    margin: 30px auto 0;
+    border-radius: 10px;
+    background-image: url('/src/img/banner-s.jpg');
+    @include bckGrd-img;
+    background-position: center;
+    color: var(--white);
+    @include breakpoint(large) {
+        background-image: url('/src/img/banner.jpg');
+        height: 400px;
+    }
+    @include breakpoint(x-large) { height: 440px; }
+    &__overlay {
+        @include flexColumn;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        padding-left: 40px;
+        background-color: var(--banner-overlay);
+    }
+    &__slogan {
+        font-size: 2rem;
+        font-weight: 600;
+        line-height: 38px;
+        margin-bottom: 10px;
+        @include breakpoint(medium) { font-size: 2.875rem; } 
+        @include breakpoint(large) { font-size: 3.625rem; } 
+        @include breakpoint(xx-large) { font-size: 3.25rem; } 
+    }
+    &__advert { 
+        font-size: 1.125rem;
+        padding-right: 15px;
+        @include breakpoint(large) { font-size: 1.25rem;}
+    }
+}
