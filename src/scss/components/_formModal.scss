@@ -3,15 +3,11 @@
     width: 100%;
     position: fixed;
     right: -100%;
-    z-index: 7000;
+    z-index: 900000;
     top: 0; 
     bottom: 0;
     background-color: var(--formModal-BckGrd);
     transition-duration: 0.5s;
     &--visible { right: 0; }
-    @include breakpoint(large) { position: static; }
-    &__closingCross { 
-        color: var(--black);
-        @include breakpoint(large) { visibility: hidden;}
-    }
+    &--static { @include breakpoint(large) { position: static; } }
 }

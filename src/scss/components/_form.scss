@@ -12,11 +12,16 @@
         &:hover { color: var(--lightGray); }
         select {
             position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
             border: none;
             appearance: none;
             outline: none;
+            cursor: pointer;
             background-color: transparent;
             color: var(--white);
+            option { color: var(--black); }
         }
         .selectArrow {
             position: absolute;

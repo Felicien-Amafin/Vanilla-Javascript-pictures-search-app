@@ -1,0 +1,20 @@
+.menuCell {
+    width: 100%;
+    height: auto;
+    padding: 16px;
+    list-style: none;
+    text-align: center;
+    cursor: pointer;
+    font-weight: 400;
+    font-size: 0.875rem;
+    color: var(--menuCellText);
+    margin-bottom: 14px;
+    border-radius: 7px;
+    @include breakpoint(medium) { font-size: 1rem;}
+    &:hover {
+        transition-duration: 0.3s;
+        transition-delay: 0.1s;
+        background-color: var(--menuCellHover);
+        border-radius: 8px;
+    }
+}

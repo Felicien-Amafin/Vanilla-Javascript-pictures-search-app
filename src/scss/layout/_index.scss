@@ -1,5 +1,7 @@
-@import 'homePage';
-@import 'footer';
+@import './homePage/homePage';
+@import './homePage/footer';
 @import './userPage/header';
 @import './userPage/banner';
 @import './userPage/collections';
+@import './userPage/gallery';
+@import './userPage/footer';

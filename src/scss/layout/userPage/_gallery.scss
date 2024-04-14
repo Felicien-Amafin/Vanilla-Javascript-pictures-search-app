@@ -1,0 +1,36 @@
+
+.gallery {
+    gap: 26px;
+    padding: 70px 40px 0 40px;
+    background-color: var(--black);
+    gap: 40px;
+    @include flexColumn;
+    @include breakpoint(x-large) {
+        gap: 50px;
+        padding: 115px 40px 0 40px;
+    }
+    &__title { @include h2; }
+    &__pictures {
+        @include flexRow;
+        flex-wrap: wrap;
+        width: 100%;
+        gap: 20px;
+        .box {
+            position: relative;
+            height: 270px;
+            flex-grow: 1;
+            border-radius: 20px;
+            overflow: hidden;
+            @include breakpoint(medium) { height: 300px;}
+            @include breakpoint(large) { &:hover .iconBar { visibility: visible; }}
+        }
+        img {
+            border-radius: 20px;
+            @include img;
+            transition-duration: 1s;
+            cursor: pointer;
+            &:hover { transform: scale(1.2); }
+        }
+    }
+}
+    

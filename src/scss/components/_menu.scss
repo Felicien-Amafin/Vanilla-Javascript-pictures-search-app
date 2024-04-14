@@ -1,0 +1,38 @@
+.menu {
+    @include flexColumn;
+    gap: 20px;
+    position: fixed;
+    top: 70px;
+    bottom: 0;
+    right: -400px;
+    width: 230px;
+    padding: 50px 20px;
+    background-color: var(--black);
+    border-top: 1px solid var(--headerBoxShadow);
+    border: 1px solid var(--headerBoxShadow);
+    transition-duration: 0.3s;
+    @include breakpoint(small) { width: 250px;}
+    @include breakpoint(medium) { width: 280px;}
+    &--visible { right: 0; }
+    &__cross { 
+        @include cross;
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        font-size: 1rem;
+    }
+    h2 {
+        padding: 8px;
+        text-align: center;
+        font-weight: 400;
+        font-size: 1.25rem;
+        color: var(--white);
+        @include breakpoint(medium) { font-size: 1.375rem;}
+    }
+    menu {  overflow-y: auto; }
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-thumb {
+        background: var(--menuScrollBar);
+        border-radius: 12px;
+    }
+}

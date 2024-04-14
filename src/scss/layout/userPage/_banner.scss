@@ -21,17 +21,19 @@
         background-color: var(--banner-overlay);
     }
     &__slogan {
+        margin-bottom: 10px;
+        line-height: 38px;
         font-size: 2rem;
         font-weight: 600;
-        line-height: 38px;
-        margin-bottom: 10px;
+        color: var(--whitesmoke);
         @include breakpoint(medium) { font-size: 2.875rem; } 
         @include breakpoint(large) { font-size: 3.625rem; } 
         @include breakpoint(xx-large) { font-size: 3.25rem; } 
     }
     &__advert { 
-        font-size: 1.125rem;
         padding-right: 15px;
+        font-size: 1.125rem;
+        color: var(--whitesmoke);
         @include breakpoint(large) { font-size: 1.25rem;}
     }
 }

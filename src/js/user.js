@@ -12,11 +12,15 @@ document.querySelector('.slidingSbubble__cross').addEventListener('click', ()=> 
 })
 //Open menu
 document.querySelector('.header__collectionBtn').addEventListener('click', ()=> {
-    document.querySelector('.collectionsMenu').classList.remove('collectionsMenu--hidden');
-    document.querySelector('.collectionsMenu').classList.add('collectionsMenu--visible');
+    document.querySelector('.menu').classList.toggle('menu--visible');
 })
 //Close menu
-document.querySelector('.collectionsMenu__cross').addEventListener('click', ()=> {
-    document.querySelector('.collectionsMenu').classList.remove('collectionsMenu--visible');
-    document.querySelector('.collectionsMenu').classList.add('collectionsMenu--hidden');
+document.querySelector('.menu__cross').addEventListener('click', ()=> {
+    document.querySelector('.menu').classList.toggle('menu--visible');
+})
+
+//Open formModal
+document.getElementById('collectionIcon').addEventListener('click', ()=> {
+    document.getElementById('formModal').classList.remove('formModal--hidden');
+    document.getElementById('formModal').classList.add('formModal--visible');
 })

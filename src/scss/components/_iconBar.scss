@@ -1,0 +1,23 @@
+.iconBar {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    @include flexColumnCenter;
+    justify-content: space-around;
+    height: 100%;
+    padding: 45px 5px 45px 0;
+    @include breakpoint(large) { visibility: hidden; }
+    &__icon {
+        @include flexColumnCenter;
+        width: 35px;
+        height: 35px;
+        border-radius: 10px;
+        font-size: 1rem;
+        background-color: var(--iconListIcon);
+        color: var(--white);
+        &:hover { 
+            cursor: pointer;
+            color: var(--lightGray);
+        }
+    }
+}
