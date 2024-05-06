@@ -36884,6 +36884,213 @@ class Database {
 
 /***/ }),
 
+/***/ "./src/js/ui/auth.js":
+/*!***************************!*\
+  !*** ./src/js/ui/auth.js ***!
+  \***************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Auth: () => (/* binding */ Auth)
+/* harmony export */ });
+/* harmony import */ var _form__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./form */ "./src/js/ui/form.js");
+/* harmony import */ var _data_database__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../data/database */ "./src/js/data/database.js");
+
+
+
+class Auth extends _form__WEBPACK_IMPORTED_MODULE_0__.Form{
+    constructor(rootId) {
+        super();
+        this.rootEl = document.getElementById(`${rootId}`);
+        this.credentials = { userName: '', emailAdress: '', password: ''};
+        this.createAuth(this.rootEl, this.modalEl); 
+    }
+    createAuth(rootEl, modalEl) {
+        rootEl.insertAdjacentElement('beforeend', modalEl);
+        modalEl.innerHTML = `${this.createFormWind('Connection', 'Sign up', 'Log in', 'Sign up')}`;
+        this.matchWindFormat(modalEl);
+        this.addMenuClickEv('menuTab1', 'menuTab2', this.signUpTab.bind(this));
+        this.addMenuClickEv('menuTab2', 'menuTab1', this.logInTab.bind(this));
+        this.initFormContent('form');
+        document.querySelector('.eyeIcon').addEventListener('click', this.togglePwdVisible);
+        document.getElementById('formBtn').addEventListener('click', this.credProcessing.bind(this));
+        document.getElementById('pwdRecovery').addEventListener('click', this.displayPwdRecoveryModal.bind(this));
+    }
+    matchWindFormat(modalEl) {
+        if(window.matchMedia("(min-width: 992px)").matches) {
+            modalEl.classList.toggle('formModal--static');
+        } else {
+            document.querySelector('.mainPage__btn').addEventListener('click', ()=> {
+                modalEl.classList.toggle('formModal--slide');
+            })
+        }
+    }
+    signUpTab() {
+        this.updateForm(['userName', 'emailAdress', 'password'], ['userName', 'pwdRecovery'], 'form__input--hidden');
+        this.updateBtnTxt('Sign up');
+    } 
+    logInTab() {
+        this.updateForm(['userName','emailAdress', 'password'], ['userName', 'pwdRecovery'], 'form__input--hidden');
+        this.updateBtnTxt('Log in');
+        this.credentials.userName = '';
+    }
+    initFormContent(formId) {
+        document.getElementById(`${formId}`).innerHTML = `
+            <input class="formTab form__input " type="text" id="userName" placeholder="User name" autocomplete="off">
+            <input class="formTab form__input " type="text" id="emailAdress" placeholder="Email address" autocomplete="off">
+            <div class="form__password">
+                <input class="formTab form__input " type="password" id="password" placeholder="Password" autocomplete="off">
+                <i class="eyeIcon eyeIcon--gray fa-solid fa-eye"></i>
+            </div>
+            <button class="formBtn formTab form__input--hidden" id="pwdRecovery" "type="button" aria-label="Password recovery">I forgot my password</button>
+        `
+    }
+    togglePwdVisible() { 
+        const eyeIconEl = document.querySelector('.eyeIcon');
+        const passwordEl = document.getElementById('password');
+        eyeIconEl.classList.toggle('eyeIcon--white');
+        passwordEl.type = passwordEl.type === 'password' ? 'text' : 'password';
+    }
+    credProcessing() {
+        const logIn = [{id: 'password', minLength: 8}];
+        const signUp = [{id: 'userName', minLength: 6}, {id: 'password', minLength: 8}];
+        if(document.getElementById('formBtn').textContent === 'Log in') { 
+            this.checkCredentials(logIn) ? _data_database__WEBPACK_IMPORTED_MODULE_1__.Database.sendLoginCred(this.credentials) : null;
+        } else { 
+            this.checkCredentials(signUp) ? _data_database__WEBPACK_IMPORTED_MODULE_1__.Database.sendSignUpCred(this.credentials): null;
+            const validationEl = document.getElementById('validation');
+            validationEl.classList.contains('form__input--hidden') ? null : validationEl.classList.add('form__input--hidden');  
+        }
+    } 
+    checkCredentials(objArray) {
+        const status1 = this.checkMinLength(objArray);
+        const status2 = this.checkEmailAformat('emailAdress', 'errorList');
+        const errorList =  document.getElementById('errorList');
+        if(!document.querySelector('.formTab__error')) { errorList.classList.add('form__input--hidden'); }
+        return status1 && status2;
+    }
+    checkMinLength(objArray) {
+        const errorList = document.getElementById('errorList');
+        let status = 1;
+        if(errorList.innerHTML !== '') { errorList.innerHTML = '';}
+        objArray.forEach((obj)=> {
+            const el = document.getElementById(`${obj.id}`);
+            const elValue = el.value.trim(); 
+            const errorMess = `<li>${el.placeholder} must be at least ${obj.minLength} characters long</li>`;
+            if(elValue.length < obj.minLength) {
+                if(!el.classList.contains('formTab__error')) { 
+                    el.classList.add('formTab__error'); 
+                    errorList.classList.remove('form__input--hidden');
+                }
+                status --;
+                errorList.insertAdjacentHTML('beforeend', errorMess); 
+            } else {
+                if(el.classList.contains('formTab__error')) { el.classList.remove('formTab__error'); }
+                if(this.credentials[`${el.id}`] !== elValue){ this.credentials[`${el.id}`] = elValue; }
+            }
+        });
+        return status === 1;
+    }
+    checkEmailAformat(emailId, errorListId) {
+        const emailEl = document.getElementById(`${emailId}`);
+        const errorListEl = document.getElementById(`${errorListId}`);
+        const emailValue = emailEl.value.trim().toLowerCase();
+        if(!emailValue.match(/^[A-Za-z\._\-0-9]*[@][A-Za-z]*[\.][a-z]{2,4}$/)) {
+            emailEl.classList.add('formTab__error'); 
+            errorListEl.classList.remove('form__input--hidden');
+            errorListEl.insertAdjacentHTML('beforeend', `<li>Invalid email address</li>`);
+            return false;
+        }else {
+            if(emailEl.classList.contains('formTab__error')) { emailEl.classList.remove('formTab__error'); }
+            if(this.credentials[`${emailId}`] !== emailValue){ this.credentials[`${emailId}`] = emailValue; }
+        } 
+        return true;
+    }
+    displayPwdRecoveryModal(event) {
+        event.preventDefault();
+        const templt = document.getElementById('pwdRecoveryTemplt');
+        const content = templt.content.cloneNode(true);
+        document.querySelector('body').appendChild(content);
+        document.querySelector('.closingCross').addEventListener('click', this.closePwdRecoveryModal);
+        document.getElementById('pwdRecoveryBtn').addEventListener('click', this.sendPwdRecovery.bind(this));
+    }
+    closePwdRecoveryModal() { document.getElementById('pwdRecoveryModal').remove();}
+    sendPwdRecovery() {
+        const errorFieldEl = document.getElementById('errorField');
+        const confirmationEl = document.getElementById('confirmation');
+        if(errorFieldEl.innerHTML !== '') { errorFieldEl.innerHTML = '';}
+        if(confirmationEl.innerHTML !== '') { confirmationEl.innerHTML = '';}
+        if(!confirmationEl.classList.contains('form__input--hidden')) { confirmationEl.classList.add('form__input--hidden') }
+        this.checkEmailAformat('recoveryEaddress', 'errorField') ? _data_database__WEBPACK_IMPORTED_MODULE_1__.Database.sendRecoveryMail('recoveryEaddress') : null;
+    }
+}
+
+/***/ }),
+
+/***/ "./src/js/ui/form.js":
+/*!***************************!*\
+  !*** ./src/js/ui/form.js ***!
+  \***************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Form: () => (/* binding */ Form)
+/* harmony export */ });
+class Form {
+    constructor() { this.modalEl = this.createModal(); }
+    createModal() {
+        const modalEl = document.createElement('section');
+        modalEl.classList.add('formModal');
+        modalEl.id = 'formModal';
+        return modalEl;
+    }
+    createFormWind(titleTxt, menuTab1Txt, menuTab2Txt, btnTxt) {
+        return `
+            <div class="formWindow">
+                <h2 class="formWindow__title" id="formTitle">${titleTxt}</h2>
+                <menu class="formMenu">
+                    <li class="formTab selected" id="menuTab1">${menuTab1Txt}</li>
+                    <li class="formTab hightlight" id="menuTab2">${menuTab2Txt}</li>
+                </menu>
+                <div class="formWindow__flex">
+                    <form class="form" id="form"></form>
+                    <button class="formBtn formTab" type="button" id="formBtn" aria-label="form validation">${btnTxt}</button>
+                    <ul class="form__errorMess form__input--hidden" id="errorList"></ul>
+                    <ul class="form__validation form__input--hidden" id="validation"></ul>
+                </div>
+            </div>
+        `
+    }
+    addMenuClickEv(firstElId, secondElId, firstElFunc) {
+        const firstEl = document.getElementById(`${firstElId}`);
+        const secondEl = document.getElementById(`${secondElId}`);
+        firstEl.addEventListener('click', ()=> {
+            if(secondEl.classList.contains('selected')) {
+                secondEl.classList.replace('selected', 'hightlight');
+                firstEl.classList.replace('hightlight','selected');
+                firstElFunc();
+            }
+        });
+    }
+    updateForm(inputToClear, inputToToggle, maskingClass) {
+        const errorListEl = document.getElementById('errorList');
+        const validationEl = document.getElementById('validation');
+        inputToClear.forEach(id => {
+            const el = document.getElementById(`${id}`);
+            el.value = '';
+            if(el.classList.contains('formTab__error')) { el.classList.remove('formTab__error'); }
+        });   
+        inputToToggle.forEach(id => { document.getElementById(`${id}`).classList.toggle(`${maskingClass}`); });  
+        if(!errorListEl.classList.contains('form__input--hidden')) { errorListEl.classList.add('form__input--hidden'); }
+        if(!validationEl.classList.contains('form__input--hidden')) { validationEl.classList.add('form__input--hidden'); }
+    }
+    updateBtnTxt(btnTxt) { document.getElementById('formBtn').textContent = btnTxt; }
+}
+
+/***/ }),
+
 /***/ "./src/img/animal.jpg":
 /*!****************************!*\
   !*** ./src/img/animal.jpg ***!
@@ -40048,7 +40255,7 @@ function __disposeResources(env) {
 /******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
 /******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
 /******/ 		var installedChunks = {
-/******/ 			"user": 0
+/******/ 			"homePage": 0
 /******/ 		};
 /******/ 		
 /******/ 		// no chunk on demand loading
@@ -40075,50 +40282,27 @@ function __disposeResources(env) {
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-/*!************************!*\
-  !*** ./src/js/user.js ***!
-  \************************/
+/*!****************************!*\
+  !*** ./src/js/homePage.js ***!
+  \****************************/
 __webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   App: () => (/* binding */ App)
+/* harmony export */ });
 /* harmony import */ var _scss_main_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../scss/main.scss */ "./src/scss/main.scss");
-/* harmony import */ var _data_database__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./data/database */ "./src/js/data/database.js");
+/* harmony import */ var _ui_auth__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ui/auth */ "./src/js/ui/auth.js");
 
 
-/* import { CollectionForm } from './delete/collectionForm'; */
 
-/* //Show slidingSbubble
-document.querySelector('.header__searchIcon').addEventListener('click', ()=> {
-    document.querySelector('.slidingSbubble').classList.add('slidingSbubble__visible');
-    document.querySelector('.slidingSbubble').classList.toggle('slidingSbubble__hidden');
-})
-//Close slidingSbubble
-document.querySelector('.slidingSbubble__cross').addEventListener('click', ()=> {
-    document.querySelector('.slidingSbubble').classList.toggle('slidingSbubble__visible');
-    document.querySelector('.slidingSbubble').classList.toggle('slidingSbubble__hidden');
-}) */
-/* class User {
-    static form = new CollectionForm();
-    static init() {
-        //Open menu
-        document.querySelector('.header__collectionBtn').addEventListener('click', ()=> {
-            document.querySelector('.menu').classList.toggle('menu--visible');
-        })
-        //Close menu
-        document.querySelector('.menu__cross').addEventListener('click', ()=> {
-            document.querySelector('.menu').classList.toggle('menu--visible');
-        })
+class App {
+    static init() { new _ui_auth__WEBPACK_IMPORTED_MODULE_1__.Auth('page'); }
+}
+App.init();
 
-        //Open formModal
-        document.getElementById('collectionIcon').addEventListener('click', ()=> {
-            document.getElementById('formModal').classList.toggle('formModal--slide');
-        })
-    }
-} */
-/* User.init(); */
 
-document.querySelector('.header__logOutBtn').addEventListener('click', _data_database__WEBPACK_IMPORTED_MODULE_1__.Database.logOut);
 
 })();
 
 /******/ })()
 ;
-//# sourceMappingURL=user.js.map
+//# sourceMappingURL=homePage.js.map

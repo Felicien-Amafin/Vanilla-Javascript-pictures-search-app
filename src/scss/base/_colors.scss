@@ -4,7 +4,7 @@
     --lightGray: lightgrey;
     --whitesmoke: whitesmoke;
     //HomePage
-    --homeP-overlay:  rgba(0, 0, 0, 0.274);
+    --homeP-overlay:  rgba(0, 0, 0, 0.212);
     --advert: rgb(219, 218, 218);
     --homeP-btnBckGrd:  rgba(211, 211, 211, 0.534);
     --homeP-btnBorder: rgb(129, 129, 129);
@@ -12,13 +12,15 @@
     --formModal-BckGrd: var(--black);
     --formWindow-border: rgba(209, 206, 206, 0.445);
     --formWindow-title: rgb(209, 206, 206);
-    --form-elBorder:  rgb(209, 206, 206);
+    --form-tab: rgba(245, 245, 245, 0.712);
     --form-btnBck: transparent;
     --form-btnText:  var(--whitesmoke);
     --form-btnBckHover: whitesmoke;
     --form-btnTextHover: var(--black);
-    --form-hightLightText: rgb(80, 79, 79);
-    --form-hightLightMenu: var(--whitesmoke);
+    --error : rgb(100, 3, 3);
+    --validation: rgb(19, 175, 19);
+    --menuTabSelected: var(--whitesmoke);
+    --menuTabHighlight: rgba(211, 211, 211, 0.24);
     //UserPage
     --header: var(--black);
     --headerBoxShadow: rgba(51, 50, 50, 0.658);

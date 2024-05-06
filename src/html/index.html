@@ -7,7 +7,7 @@
     <title><%= htmlWebpackPlugin.options.title %></title>
 </head>
 <body>
-    <main class="homePage">
+    <main class="homePage" id="page">
         <section class="mainPage">
             <div class="mainPage__overlay">
                 <div class="mainPage__flex">
@@ -18,21 +18,24 @@
                 <button class="mainPage__btn"><i class="fa-solid fa-angle-left"></i></button>
             </div>
         </section>
-        <section class="formModal formModal--static" id="formModal">
-            <div class="formWindow">
-                <h2 class="formWindow__title">Connection</h2>
-                <menu class="formMenu">
-                    <li class="formTab hightLight">Sign up</li>
-                    <li class="formTab">Log in</li>
-                </menu>
-                <form class="form">
-                    <input class="formTab form__input " type="text" id="name" placeholder="Name" autocomplete="off">
-                    <input class="formTab form__input " type="text" id="email" placeholder="Email Address" autocomplete="off">
-                    <input class="formTab form__input " type="text" id="password" placeholder="Password" autocomplete="off" >
-                    <button class="form__btn formTab" type="button" id="formValidation">Sign up</button>
-                </form>
-            </div>
-        </section>
     </main>
     <footer class="footerHp">© 2024 Felicien Amafin</footer>
+    <template id="pwdRecoveryTemplt">
+        <div class="formModal formModal--slide" id="pwdRecoveryModal">
+            <button class="closingCross formModal__closingCross" type="button" aria-label="Close window">
+                <i class="fa-solid fa-xmark" title="close"></i>
+            </button>
+            <div class="formWindow">
+                <h2 class="formWindow__title" id="formTitle">Password recovery</h2>
+                <div class="formWindow__flex">
+                    <form class="form" id="form">
+                        <input class="formTab form__input " type="text" id="recoveryEaddress" placeholder="Enter your email address" autocomplete="off">
+                    </form>
+                    <button class="formBtn formTab" type="button" id="pwdRecoveryBtn" aria-label="Send recovery mail">Send recovery mail</button>
+                    <ul class="form__errorMess form__input--hidden" id="errorField"></ul>
+                    <ul class="form__validation form__input--hidden" id="confirmation"></ul>
+                </div>
+            </div>
+        </div>
+    </template>
 </body>

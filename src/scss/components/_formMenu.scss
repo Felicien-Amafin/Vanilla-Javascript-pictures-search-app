@@ -2,23 +2,29 @@
     @include flexRowCenter;
     width: 100%;
     justify-content: center;
-    border: 1px solid var(--form-elBorder);
     border-radius: 10px;
     li { 
         @include flexRowCenter;
         padding: 12px; 
         list-style: none;
         text-align: center;
+        font-weight: 400;
     }
-    li:hover { cursor: pointer;}
+    li:hover { 
+        cursor: pointer;
+    }
     li:nth-child(1) { border-radius: 10px 0 0 10px;}
     li:nth-child(2) { 
         border-radius: 0 10px 10px 0; 
-        color: var(--white);
     }
-    .hightLight {
-        color: var(--form-hightLightText);
-        background-color: var(--form-hightLightMenu);
-        font-weight: 400;
+    .selected {
+        color: var(--black);
+        background-color: var(--menuTabSelected);
+    }
+    .hightlight {
+        color: var(--white);
+        &:hover {
+            background-color: var(--menuTabHighlight);
+        }
     }
 }

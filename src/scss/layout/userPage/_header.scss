@@ -18,7 +18,6 @@
         font-weight: 600;
         @include breakpoint (medium) { font-size: 1.875rem; }
         @include breakpoint (large) { font-size: 2.1875rem; }
-        cursor: pointer;
     }
     &__searchIcon {
         @include headerIcon;

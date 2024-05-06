@@ -1,0 +1,10 @@
+.formBtn { 
+    width: 100%;
+    background-color: var(--form-btn); 
+    color: var(--form-btnText);
+    cursor: pointer;
+    &:hover { 
+        background-color: var(--form-btnBckHover);
+        color: var(--form-btnTextHover);
+    }
+}

@@ -6,20 +6,18 @@
     .mainPage {
         @include fixedZero;
         background-color: var(--black);
-        background-image: url('/src/img/homePage.jpg');
+        background-image: url('/src/img/zebra2.jpg');
         @include bckGrd-img;
-        background-position: 36% 75%;
+        background-position: 40%  55%;
         @include breakpoint(large) { position: static; }
+        @include breakpoint(x-large) { background-position: center}
         &__overlay {
-            @include flexColumnCenter;
             @include fixedZero;
             z-index: 3000;
             padding: 50px 30px 0 0;
             background-color: var(--homeP-overlay);
-            @include breakpoint(large) {
-                display: block;
-                width: 70%;
-            }
+            @include breakpoint(medium) { @include flexRow; justify-content: center; }
+            @include breakpoint(large) { display: block; width: 70%; }
         }
         &__flex {
             position: absolute;
@@ -36,29 +34,26 @@
             text-align: right;
             color: var(--white);
             font-size: 1.0625rem;
-            
         }
         &__advert {
             max-width: 515px;
             padding-left: 50px ;
+            margin-top: 150px;
             text-align: left;
             color: var(--advert);
             text-transform: uppercase;
             font-weight: 600;
             line-height: 3.75rem;
-            font-size: 2.5rem;
-            @include breakpoint(small) { font-size: 2.625rem;}
-            @include breakpoint(medium) { 
-                font-size: 3.125rem;
-                text-align: center;
-            }
+            font-size: 32px;
+            @include breakpoint(medium) { text-align: center; }
             @include breakpoint(large) { 
+                margin: 0;
                 position: absolute;
-                top: 250px;
+                top: 230px;
                 right: 30px;
                 max-width: 450px;
                 text-align: right;
-                line-height: 70px;
+                font-size: 36px;
             }
         }
         &__btn {

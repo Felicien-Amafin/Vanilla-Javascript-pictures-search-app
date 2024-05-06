@@ -5,7 +5,7 @@ const clean = require('clean-webpack-plugin');
 module.exports = {
     mode: 'development',
     entry: {
-        authentication: "./src/js/authentication.js",
+        homePage: "./src/js/homePage.js",
         user: "./src/js/user.js",
     },
     output: {
@@ -40,23 +40,12 @@ module.exports = {
             },
         ]
     },
-    /* plugins: [].concat(
-        ['authentication', 'user'].map(
-        (page) =>
-            new HtmlWebpackPlugin({
-                inject: true,
-                template: `./src/html/${page}.html`,
-                filename: `${page}.html`,
-                chunks: [page],
-            })
-        )
-    ), */
     plugins: [
         new HtmlWebpackPlugin({
             title: 'PixAvenue',
             filename: 'index.html',
             template: './src/html/index.html',
-            chunks: ['authentication'],
+            chunks: ['homePage'],
         }),
         new HtmlWebpackPlugin({
             title: 'PixAvenue',

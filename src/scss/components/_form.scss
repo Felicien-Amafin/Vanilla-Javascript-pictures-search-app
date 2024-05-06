@@ -28,6 +28,22 @@
             right: 20px;
         }
     }
+    &__password {
+        @include flexRow; 
+        width: 100%; 
+        position: relative;
+        .eyeIcon { 
+            position: absolute;
+            top: 50%; right: 5%;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+            &--gray { 
+                color: var(--form-tab); 
+                &:hover { color: rgba(245, 245, 245, 0.342); }
+            }
+            &--white { color: var(--white);}
+        }
+    }
     &__input {
         padding: 20px;
         text-align: left;
@@ -35,13 +51,10 @@
         background-color: transparent;
         color: var(--white);
     }
-    &__btn { 
-        background-color: var(--form-btn); 
-        color: var(--form-btnText);
-        cursor: pointer;
-        &:hover { 
-            background-color: var(--form-btnBckHover);
-            color: var(--form-btnTextHover);
-        }
-    }
+    &__input--hidden { @include hidden; }
+    &__errorMess { color: var(--error); }
+    &__validation { 
+        color: var(--validation); 
+        text-align: center;
+    } 
 }

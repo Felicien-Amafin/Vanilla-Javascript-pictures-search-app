@@ -8,6 +8,6 @@
     bottom: 0;
     background-color: var(--formModal-BckGrd);
     transition-duration: 0.5s;
-    &--visible { right: 0; }
+    &--slide { right: 0; }
     &--static { @include breakpoint(large) { position: static; } }
 }

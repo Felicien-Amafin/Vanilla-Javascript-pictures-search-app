@@ -17,5 +17,10 @@
         font-size: 1.125rem;
         font-weight: 600;
     }
+    &__flex {
+        width: 100%;
+        @include flexColumnCenter;
+        gap: 20px;
+    }
 }
     
