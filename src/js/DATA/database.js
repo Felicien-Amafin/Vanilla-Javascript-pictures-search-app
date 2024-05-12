@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
+import { getFirestore,doc, setDoc, getDoc } from 'firebase/firestore';
 import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, signOut, 
 signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
 
@@ -13,15 +13,20 @@ const firebaseConfig = {
     measurementId: "G-8EJ24F8EYN"
 };
 
- const app = initializeApp(firebaseConfig);
- const auth = getAuth(app);
- const db = getFirestore(app);
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
 export class Database {
-    static async sendSignUpCred(cred) {
+    static user = [];
+    static async signUp(cred) {
         try {
             document.querySelector('.formBtn').disabled = true;
             const userCred = await createUserWithEmailAndPassword(auth, cred.emailAdress, cred.password);
+            await setDoc(doc(db, "users", userCred.user.uid), { 
+                userName: `${cred.userName}`, 
+                collections: {names: [], group: null} 
+            });
             await sendEmailVerification(userCred.user);
             const mess = `Complete your sign up by clicking on the link sent at ${userCred.user.email}`;
             this.feedbackMess('validation', mess);
@@ -33,7 +38,7 @@ export class Database {
             document.querySelector('.formBtn').disabled = false;
         }  
     }
-    static async sendLoginCred(cred) {
+    static async logIn(cred) {
         try {
             document.querySelector('.formBtn').disabled = true; 
             const userCred = await signInWithEmailAndPassword(auth, cred.emailAdress, cred.password);
@@ -43,8 +48,18 @@ export class Database {
                 this.feedbackMess('errorList', mess);
                 document.querySelector('.formBtn').disabled = false;
                 return;
-            } 
-            window.location.replace('../../dist/user.html'); 
+            } else {
+                const userRef= doc(db, "users", `${userCred.user.uid}`);
+                const userSnap = await getDoc(userRef);
+                if(!userSnap.exists()) { 
+                    this.feedbackMess('errorList', 'User profil deleted.');
+                    return;
+                }
+               const userProfil = userSnap.data();
+               this.user.push(userRef, userProfil);
+               sessionStorage.setItem('user', JSON.stringify(this.user));
+               window.location.replace('../../dist/user.html');
+            }
         } catch(error) {
             const mess = error.code === 'auth/invalid-credential'? 'Invalid password or email address.': error.code;
             this.feedbackMess('errorList', mess);
@@ -57,7 +72,6 @@ export class Database {
             sendBtn.disabled = true;
             const emailAdressVal = document.getElementById(`${emailAdressId}`).value;
             await sendPasswordResetEmail(auth, emailAdressVal);
-            console.log(emailAdressVal)
             this.feedbackMess('confirmation', `A password recovery mail has been sent.`);
             sendBtn.disabled = false;
         } catch(error) {
@@ -71,6 +85,7 @@ export class Database {
         feedback.classList.remove('form__input--hidden');
         feedback.innerHTML = `${mess}`;  
     }
+    
     static logOut() { 
         signOut(auth);
         window.location.replace('../../dist/index.html'); 

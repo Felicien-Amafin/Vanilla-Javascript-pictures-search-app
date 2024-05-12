@@ -58,9 +58,9 @@ export class Auth extends Form{
         const logIn = [{id: 'password', minLength: 8}];
         const signUp = [{id: 'userName', minLength: 6}, {id: 'password', minLength: 8}];
         if(document.getElementById('formBtn').textContent === 'Log in') { 
-            this.checkCredentials(logIn) ? Database.sendLoginCred(this.credentials) : null;
+            this.checkCredentials(logIn) ? Database.logIn(this.credentials) : null;
         } else { 
-            this.checkCredentials(signUp) ? Database.sendSignUpCred(this.credentials): null;
+            this.checkCredentials(signUp) ? Database.signUp(this.credentials): null;
             const validationEl = document.getElementById('validation');
             validationEl.classList.contains('form__input--hidden') ? null : validationEl.classList.add('form__input--hidden');  
         }

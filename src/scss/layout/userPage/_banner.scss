@@ -3,13 +3,13 @@
     height: 300px;
     margin: 30px auto 0;
     border-radius: 10px;
-    background-image: url('/src/img/home.jpg');
+    background-image: url('/src/img/roche-big.jpg');
     @include bckGrd-img;
     background-position: center;
     color: var(--white);
     @include breakpoint(medium) { background-position: 20% 75%; }
     @include breakpoint(large) {
-        background-image: url('/src/img/home.jpg');
+        background-image: url('/src/img/roche-big.jpg');
         height: 400px;
     }
     @include breakpoint(x-large) { height: 440px; }
