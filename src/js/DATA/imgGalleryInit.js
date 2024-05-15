@@ -1,0 +1,20 @@
+export const galleryInit = [
+    {title: 'Grouch', src: '/src/img/grouch.jpg'},
+    {title: 'Elephant', src: '/src/img/elephant.jpg'},
+    {title: 'Rock', src: '/src/img/rock.jpg'},
+    {title: 'Mountain', src: '/src/img/mountain.jpg'},
+    {title: 'Taxi', src: '/src/img/taxi.jpg'},
+    {title: 'Lion', src: '/src/img/lion.jpg'},
+    {title: 'Men spreading arms', src: '/src/img/MenSpreadingArms.jpg'},
+    {title: 'Old women', src: '/src/img/oldWomen.jpg'},
+    {title: 'Colored hands', src: '/src/img/coloredHands.jpg'},
+    {title: 'Lack surrounded by mountains', src: '/src/img/lackAndMountains.jpg'},
+    {title: 'Colored face', src: '/src/img/coloredFace.jpg'},
+    {title: 'ToukTouk', src: '/src/img/touktouk.jpg'},
+    {title: 'Face painting on wall', src: '/src/img/faceOnWall.jpg'},
+    {title: 'Zebra', src: '/src/img/zebra.jpg'},
+    {title: 'Zebra women', src: '/src/img/zebraWomen.jpg'},
+    {title: 'Lack', src: '/src/img/lack.jpg'},
+    {title: "Prima ballerina's feet", src: '/src/img/primaBallerina.jpg'},
+    
+]

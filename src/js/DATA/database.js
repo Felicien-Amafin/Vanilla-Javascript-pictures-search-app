@@ -21,7 +21,7 @@ export class Database {
     static user = [];
     static async signUp(cred) {
         try {
-            document.querySelector('.formBtn').disabled = true;
+            document.getElementById('formBtn').disabled = true;
             const userCred = await createUserWithEmailAndPassword(auth, cred.emailAdress, cred.password);
             await setDoc(doc(db, "users", userCred.user.uid), { 
                 userName: `${cred.userName}`, 
@@ -29,24 +29,23 @@ export class Database {
             });
             await sendEmailVerification(userCred.user);
             const mess = `Complete your sign up by clicking on the link sent at ${userCred.user.email}`;
-            this.feedbackMess('validation', mess);
             await signOut(auth);
-            document.querySelector('.formBtn').disabled = false;
+            this.feedbackMess('validation', mess);
         } catch(error) {
             const mess = error.code === 'auth/email-already-in-use'? 'This email address is already used!': error.code;
             this.feedbackMess('errorList', mess); 
-            document.querySelector('.formBtn').disabled = false;
         }  
+        document.getElementById('formBtn').disabled = false;
     }
     static async logIn(cred) {
         try {
-            document.querySelector('.formBtn').disabled = true; 
+            document.getElementById('formBtn').disabled = true; 
             const userCred = await signInWithEmailAndPassword(auth, cred.emailAdress, cred.password);
             if(!userCred.user.emailVerified) {
                 signOut(auth);
                 const mess = 'Verify your email address before login!';
                 this.feedbackMess('errorList', mess);
-                document.querySelector('.formBtn').disabled = false;
+                document.getElementById('formBtn').disabled = false;
                 return;
             } else {
                 const userRef= doc(db, "users", `${userCred.user.uid}`);
@@ -63,7 +62,7 @@ export class Database {
         } catch(error) {
             const mess = error.code === 'auth/invalid-credential'? 'Invalid password or email address.': error.code;
             this.feedbackMess('errorList', mess);
-            document.querySelector('.formBtn').disabled = false;
+            document.getElementById('formBtn').disabled = false;
         }
     }
     static async sendRecoveryMail(emailAdressId) {
@@ -83,9 +82,8 @@ export class Database {
     static feedbackMess(feedbackId, mess) {
         const feedback = document.getElementById(`${feedbackId}`);
         feedback.classList.remove('form__input--hidden');
-        feedback.innerHTML = `${mess}`;  
+        feedback.innerHTML = `${mess}`;
     }
-    
     static logOut() { 
         signOut(auth);
         window.location.replace('../../dist/index.html'); 

@@ -10,7 +10,7 @@
             <li class="formTab">Create a collection</li>
         </menu>
         <form class="form">
-            <div class="form__selection formTab">
+            <div class="form__selection formTab" id="selection">
                 <select name="collection-select">
                     <option>Select a collection</option>
                     <option value="">1</option>
@@ -42,3 +42,13 @@
         <p>Image title</p>
     </div>
 </div>
+<!-- Img widget -->
+<div class="box">
+    <img loading="lazy" src=<%= require("../img/pic3.jpg")%>>
+    <ul class="iconBar">
+        <li class="iconBar__icon"><i class="fa-solid fa-expand"></i></li>
+        <li class="iconBar__icon"><i class="fa-solid fa-heart"></i></li>
+        <li class="iconBar__icon"><i class="fa-solid fa-download"></i></li>
+    </ul>
+</div>
+                

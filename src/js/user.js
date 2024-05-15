@@ -1,11 +1,18 @@
 import '../scss/main.scss';
 import { Database } from "./data/database";
+import { ImgGallery } from './ui/imgGallery'
+import { galleryInit } from './data/imgGalleryInit';
 
 
-class User {
-    static user = JSON.parse(sessionStorage.getItem('user'));
+export class User {
+    static user;
     static init() { 
        this.addEventLstns();
+       this.user = JSON.parse(sessionStorage.getItem('user'));
+       let userName =  this.user[1].userName;
+       userName = userName.length > 8 ? `${userName.substring(0, 9)}...`: userName;
+       document.querySelector('.header__userName').textContent = userName;
+       new ImgGallery(galleryInit);
     }
     static addEventLstns() {
         //Show slidingSbubble
@@ -19,8 +26,11 @@ class User {
         document.querySelector('.slidingSbubble').classList.toggle('slidingSbubble__hidden');
         })
         //Open menu
-        document.querySelector('.header__collectionBtn').addEventListener('click', ()=> {
-        document.querySelector('.menu').classList.toggle('menu--visible');
+        const classArray = ['header__collectionBtn', 'header__collectionIcon'];
+        classArray.map((className)=>{
+            document.querySelector(`.${className}`).addEventListener('click', ()=> {
+                document.querySelector('.menu').classList.toggle('menu--visible');
+            })
         })
         //Close menu
         document.querySelector('.menu__cross').addEventListener('click', ()=> {
@@ -32,17 +42,6 @@ class User {
 }
 User.init()
 
-/* class User {
-    static form = new CollectionForm();
-    static init() {
-       
-
-        //Open formModal
-        document.getElementById('collectionIcon').addEventListener('click', ()=> {
-            document.getElementById('formModal').classList.toggle('formModal--slide');
-        })
-    }
-} */
 
 
 

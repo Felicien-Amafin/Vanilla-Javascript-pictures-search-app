@@ -29,11 +29,11 @@ export class Auth extends Form{
         }
     }
     signUpTab() {
-        this.updateForm(['userName', 'emailAdress', 'password'], ['userName', 'pwdRecovery'], 'form__input--hidden');
+        this.updateForm(['userName', 'emailAdress', 'password'], ['userName', 'pwdRecovery'], 'form__element--hidden');
         this.updateBtnTxt('Sign up');
     } 
     logInTab() {
-        this.updateForm(['userName','emailAdress', 'password'], ['userName', 'pwdRecovery'], 'form__input--hidden');
+        this.updateForm(['userName','emailAdress', 'password'], ['userName', 'pwdRecovery'], 'form__element--hidden');
         this.updateBtnTxt('Log in');
         this.credentials.userName = '';
     }
@@ -45,7 +45,7 @@ export class Auth extends Form{
                 <input class="formTab form__input " type="password" id="password" placeholder="Password" autocomplete="off">
                 <i class="eyeIcon eyeIcon--gray fa-solid fa-eye"></i>
             </div>
-            <button class="formBtn formTab form__input--hidden" id="pwdRecovery" "type="button" aria-label="Password recovery">I forgot my password</button>
+            <button class="formBtn formTab form__element--hidden" id="pwdRecovery" "type="button" aria-label="Password recovery">I forgot my password</button>
         `
     }
     togglePwdVisible() { 
@@ -61,15 +61,17 @@ export class Auth extends Form{
             this.checkCredentials(logIn) ? Database.logIn(this.credentials) : null;
         } else { 
             this.checkCredentials(signUp) ? Database.signUp(this.credentials): null;
-            const validationEl = document.getElementById('validation');
-            validationEl.classList.contains('form__input--hidden') ? null : validationEl.classList.add('form__input--hidden');  
+            //Reset validation
+            const validation = document.getElementById('validation');
+            if(!validation.classList.contains('form__element--hidden')) { validation.classList.add('form__element--hidden'); }
         }
     } 
     checkCredentials(objArray) {
         const status1 = this.checkMinLength(objArray);
         const status2 = this.checkEmailAformat('emailAdress', 'errorList');
         const errorList =  document.getElementById('errorList');
-        if(!document.querySelector('.formTab__error')) { errorList.classList.add('form__input--hidden'); }
+        const validation =  document.getElementById('validation');
+        if(!document.querySelector('.formTab__error')) { errorList.classList.add('form__element--hidden'); }
         return status1 && status2;
     }
     checkMinLength(objArray) {
@@ -83,7 +85,7 @@ export class Auth extends Form{
             if(elValue.length < obj.minLength) {
                 if(!el.classList.contains('formTab__error')) { 
                     el.classList.add('formTab__error'); 
-                    errorList.classList.remove('form__input--hidden');
+                    errorList.classList.remove('form__element--hidden');
                 }
                 status --;
                 errorList.insertAdjacentHTML('beforeend', errorMess); 
@@ -100,7 +102,7 @@ export class Auth extends Form{
         const emailValue = emailEl.value.trim().toLowerCase();
         if(!emailValue.match(/^[A-Za-z\._\-0-9]*[@][A-Za-z]*[\.][a-z]{2,4}$/)) {
             emailEl.classList.add('formTab__error'); 
-            errorListEl.classList.remove('form__input--hidden');
+            errorListEl.classList.remove('form__element--hidden');
             errorListEl.insertAdjacentHTML('beforeend', `<li>Invalid email address</li>`);
             return false;
         }else {
@@ -123,7 +125,7 @@ export class Auth extends Form{
         const confirmationEl = document.getElementById('confirmation');
         if(errorFieldEl.innerHTML !== '') { errorFieldEl.innerHTML = '';}
         if(confirmationEl.innerHTML !== '') { confirmationEl.innerHTML = '';}
-        if(!confirmationEl.classList.contains('form__input--hidden')) { confirmationEl.classList.add('form__input--hidden') }
+        if(!confirmationEl.classList.contains('form__element--hidden')) { confirmationEl.classList.add('form__element--hidden') }
         this.checkEmailAformat('recoveryEaddress', 'errorField') ? Database.sendRecoveryMail('recoveryEaddress') : null;
     }
 }

@@ -17,8 +17,8 @@ export class Form {
                 <div class="formWindow__flex">
                     <form class="form" id="form"></form>
                     <button class="formBtn formTab" type="button" id="formBtn" aria-label="form validation">${btnTxt}</button>
-                    <ul class="form__errorMess form__input--hidden" id="errorList"></ul>
-                    <ul class="form__validation form__input--hidden" id="validation"></ul>
+                    <ul class="form__errorMess form__element--hidden" id="errorList"></ul>
+                    <ul class="form__validation form__element--hidden" id="validation"></ul>
                 </div>
             </div>
         `
@@ -43,8 +43,8 @@ export class Form {
             if(el.classList.contains('formTab__error')) { el.classList.remove('formTab__error'); }
         });   
         inputToToggle.forEach(id => { document.getElementById(`${id}`).classList.toggle(`${maskingClass}`); });  
-        if(!errorListEl.classList.contains('form__input--hidden')) { errorListEl.classList.add('form__input--hidden'); }
-        if(!validationEl.classList.contains('form__input--hidden')) { validationEl.classList.add('form__input--hidden'); }
+        if(!errorListEl.classList.contains('form__element--hidden')) { errorListEl.classList.add('form__element--hidden'); }
+        if(!validationEl.classList.contains('form__element--hidden')) { validationEl.classList.add('form__element--hidden'); }
     }
     updateBtnTxt(btnTxt) { document.getElementById('formBtn').textContent = btnTxt; }
 }

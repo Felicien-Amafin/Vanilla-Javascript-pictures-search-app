@@ -3,7 +3,7 @@
     max-width: 100%;
     max-height: 100%;
     padding: 0 10px;
-    @include breakpoint(medium) { overflow-y: auto;}
+    overflow-y: auto;
     &__flexIcons {
         gap: 100px;
         width: 100%;
@@ -23,14 +23,14 @@
     }
     &__img {
         margin-top: 20px;
-        @include breakpoint(medium) {
+        @include breakpoint(small) {
             @include flexRowCenter;
             max-width: 600px;
             max-height: 500px;
         }
-        img {
-           max-width: 100%;
-           max-height: 100%;
+        img { 
+            max-width: 100%; 
+            max-height: 100%;
         }
     }
     p {

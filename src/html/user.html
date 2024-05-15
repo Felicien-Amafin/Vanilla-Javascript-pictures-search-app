@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
     <title><%= htmlWebpackPlugin.options.title %></title>
 </head>
-<body class="page">
+<body class="page" id="page">
     <header class="header">
         <h1 class="header__h1">PIXAVENUE</h1>
         <button class="header__searchIcon" type="button" title="Search" aria-label="Search">
@@ -19,7 +19,7 @@
             <input class="searchBubble__input" type="text" placeholder="Enter your search...">
         </div>
         <p class="header__userName">Felicien</p>
-        <button class="header__collectionBtn" title="Collection">Collection</button>
+        <button class="header__collectionBtn"  type="button" title="Collection" aria-label="Open collection" >Collection</button>
         <button class="header__collectionIcon" type="button" title="Collection" aria-label="Open collection">
             <i class="fa-regular fa-images"></i>
         </button>
@@ -64,10 +64,10 @@
                     <div class="overlay"><p class="itemTitle">Animals</p></div>
                 </li>
                 <li class="collections__item">
-                    <div class="overlay "><p class="itemTitle">Art</p></div>
+                    <div class="overlay"><p class="itemTitle">Art</p></div>
                 </li>
                 <li class="collections__item">
-                    <div class="overlay"><p class="itemTitle">Peoples</p></div>
+                    <div class="overlay"><p class="itemTitle">People</p></div>
                 </li>
                 <li class="collections__item">
                     <div class="overlay"><p class="itemTitle">Nature</p></div>
@@ -76,144 +76,7 @@
         </section>
         <section class="gallery">
             <h2 class="gallery__title">More than 1 million high quality images</h2>
-            <div class="gallery__pictures">
-                <div class="box">
-                    <img loading="lazy" src=<%= require("../img/hibou.jpg")%>>
-                    <ul class="iconBar">
-                        <li class="iconBar__icon"><i class="fa-solid fa-expand"></i></li>
-                        <li id="collectionIcon" class="iconBar__icon"><i class="fa-solid fa-heart"></i></li>
-                        <li class="iconBar__icon"><i class="fa-solid fa-download"></i></li>
-                    </ul>
-                </div>
-                <div class="box">
-                    <img loading="lazy" src=<%= require("../img/pic2.jpg")%>>
-                    <ul class="iconBar">
-                        <li class="iconBar__icon"><i class="fa-solid fa-expand"></i></li>
-                        <li class="iconBar__icon"><i class="fa-solid fa-heart"></i></li>
-                        <li class="iconBar__icon"><i class="fa-solid fa-download"></i></li>
-                    </ul>
-                </div>
-                <div class="box">
-                    <img loading="lazy" src=<%= require("../img/roche.jpg")%>>
-                    <ul class="iconBar">
-                        <li class="iconBar__icon"><i class="fa-solid fa-expand"></i></li>
-                        <li class="iconBar__icon"><i class="fa-solid fa-heart"></i></li>
-                        <li class="iconBar__icon"><i class="fa-solid fa-download"></i></li>
-                    </ul>
-                </div>
-                <div class="box">
-                    <img loading="lazy" src=<%= require("../img/pic4.jpg")%>>
-                    <ul class="iconBar">
-                        <li class="iconBar__icon"><i class="fa-solid fa-expand"></i></li>
-                        <li class="iconBar__icon"><i class="fa-solid fa-heart"></i></li>
-                        <li class="iconBar__icon"><i class="fa-solid fa-download"></i></li>
-                    </ul>
-                </div>
-                <div class="box">
-                    <img loading="lazy" src=<%= require("../img/pic5.jpg")%>>
-                    <ul class="iconBar">
-                        <li class="iconBar__icon"><i class="fa-solid fa-expand"></i></li>
-                        <li class="iconBar__icon"><i class="fa-solid fa-heart"></i></li>
-                        <li class="iconBar__icon"><i class="fa-solid fa-download"></i></li>
-                    </ul>
-                </div>
-                <div class="box">
-                    <img loading="lazy" src=<%= require("../img/pic6.jpg")%>>
-                    <ul class="iconBar">
-                        <li class="iconBar__icon"><i class="fa-solid fa-expand"></i></li>
-                        <li class="iconBar__icon"><i class="fa-solid fa-heart"></i></li>
-                        <li class="iconBar__icon"><i class="fa-solid fa-download"></i></li>
-                    </ul>
-                </div>
-                <div class="box">
-                    <img loading="lazy" src=<%= require("../img/pic7.jpg")%>>
-                    <ul class="iconBar">
-                        <li class="iconBar__icon"><i class="fa-solid fa-expand"></i></li>
-                        <li class="iconBar__icon"><i class="fa-solid fa-heart"></i></li>
-                        <li class="iconBar__icon"><i class="fa-solid fa-download"></i></li>
-                    </ul>
-                </div>
-                <div class="box">
-                    <img loading="lazy" src=<%= require("../img/pic8.jpg")%>>
-                    <ul class="iconBar">
-                        <li class="iconBar__icon"><i class="fa-solid fa-expand"></i></li>
-                        <li class="iconBar__icon"><i class="fa-solid fa-heart"></i></li>
-                        <li class="iconBar__icon"><i class="fa-solid fa-download"></i></li>
-                    </ul>
-                </div>
-                <div class="box">
-                    <img loading="lazy" src=<%= require("../img/pic9.jpg")%>>
-                    <ul class="iconBar">
-                        <li class="iconBar__icon"><i class="fa-solid fa-expand"></i></li>
-                        <li class="iconBar__icon"><i class="fa-solid fa-heart"></i></li>
-                        <li class="iconBar__icon"><i class="fa-solid fa-download"></i></li>
-                    </ul>
-                </div>
-                <div class="box">
-                    <img loading="lazy" src=<%= require("../img/pic10.jpg")%>>
-                    <ul class="iconBar">
-                        <li class="iconBar__icon"><i class="fa-solid fa-expand"></i></li>
-                        <li class="iconBar__icon"><i class="fa-solid fa-heart"></i></li>
-                        <li class="iconBar__icon"><i class="fa-solid fa-download"></i></li>
-                    </ul>
-                </div>
-                <div class="box">
-                    <img loading="lazy" src=<%= require("../img/pic11.jpg")%>>
-                    <ul class="iconBar">
-                        <li class="iconBar__icon"><i class="fa-solid fa-expand"></i></li>
-                        <li class="iconBar__icon"><i class="fa-solid fa-heart"></i></li>
-                        <li class="iconBar__icon"><i class="fa-solid fa-download"></i></li>
-                    </ul>
-                </div>
-                <div class="box">
-                    <img loading="lazy" src=<%= require("../img/pic12.jpg")%>>
-                    <ul class="iconBar">
-                        <li class="iconBar__icon"><i class="fa-solid fa-expand"></i></li>
-                        <li class="iconBar__icon"><i class="fa-solid fa-heart"></i></li>
-                        <li class="iconBar__icon"><i class="fa-solid fa-download"></i></li>
-                    </ul>
-                </div>
-                <div class="box">
-                    <img loading="lazy" src=<%= require("../img/pic13.jpg")%>>
-                    <ul class="iconBar">
-                        <li class="iconBar__icon"><i class="fa-solid fa-expand"></i></li>
-                        <li class="iconBar__icon"><i class="fa-solid fa-heart"></i></li>
-                        <li class="iconBar__icon"><i class="fa-solid fa-download"></i></li>
-                    </ul>
-                </div>
-                <div class="box">
-                    <img loading="lazy" src=<%= require("../img/pic14.jpg")%>>
-                    <ul class="iconBar">
-                        <li class="iconBar__icon"><i class="fa-solid fa-expand"></i></li>
-                        <li class="iconBar__icon"><i class="fa-solid fa-heart"></i></li>
-                        <li class="iconBar__icon"><i class="fa-solid fa-download"></i></li>
-                    </ul>
-                </div>
-                <div class="box">
-                    <img loading="lazy" src=<%= require("../img/pic15.jpg")%>>
-                    <ul class="iconBar">
-                        <li class="iconBar__icon"><i class="fa-solid fa-expand"></i></li>
-                        <li class="iconBar__icon"><i class="fa-solid fa-heart"></i></li>
-                        <li class="iconBar__icon"><i class="fa-solid fa-download"></i></li>
-                    </ul>
-                </div>
-                <div class="box">
-                    <img loading="lazy" src=<%= require("../img/pic16.jpg")%>>
-                    <ul class="iconBar">
-                        <li class="iconBar__icon"><i class="fa-solid fa-expand"></i></li>
-                        <li class="iconBar__icon"><i class="fa-solid fa-heart"></i></li>
-                        <li class="iconBar__icon"><i class="fa-solid fa-download"></i></li>
-                    </ul>
-                </div>
-                <div class="box">
-                    <img loading="lazy" src=<%= require("../img/pic17.jpg")%>>
-                    <ul class="iconBar">
-                        <li class="iconBar__icon"><i class="fa-solid fa-expand"></i></li>
-                        <li class="iconBar__icon"><i class="fa-solid fa-heart"></i></li>
-                        <li class="iconBar__icon"><i class="fa-solid fa-download"></i></li>
-                    </ul>
-                </div>
-           </div>
+            <div class="gallery__pictures"></div>
         </section>
     </main>
     <footer class="footerUp">© 2024 Felicien Amafin</footer>
