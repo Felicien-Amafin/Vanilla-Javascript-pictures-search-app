@@ -1,8 +1,8 @@
 import '../scss/main.scss';
-import { Auth } from './ui/auth';
+import { AuthForm } from './ui/authForm';
 
 export class App {
-    static init() { new Auth('page'); }
+    static init() { new AuthForm('page'); }
 }
 App.init();
 

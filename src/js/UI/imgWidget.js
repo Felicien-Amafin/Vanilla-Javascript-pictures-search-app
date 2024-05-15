@@ -1,3 +1,5 @@
+import { User } from '../user';
+
 export class ImgWidget {
     constructor(imgObj, id, rootEl) {
         this.imgObj = imgObj;
@@ -17,6 +19,20 @@ export class ImgWidget {
             </div>
         `
         rootEl.insertAdjacentHTML('beforeend', widget);
+        this.addEventLstns(`widget-${id}`);
+    }
+     addEventLstns(widgetId) {
+        const widgetEl = document.getElementById(`${widgetId}`);
+        widgetEl.querySelector('#favorite').addEventListener('click', ()=> {
+            User.collForm.display('formModal--slide', this.imgObj);
+        })
+        widgetEl.querySelector('#expand').addEventListener('click', ()=> {
+            User.imgModal.display(this.imgObj);
+        })
+        widgetEl.querySelector('img').addEventListener('click', ()=> {
+            User.imgModal.display(this.imgObj);
+        })
+       
     }
 }
 

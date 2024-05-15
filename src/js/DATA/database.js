@@ -39,6 +39,7 @@ export class Database {
     }
     static async logIn(cred) {
         try {
+            console.log('login')
             document.getElementById('formBtn').disabled = true; 
             const userCred = await signInWithEmailAndPassword(auth, cred.emailAdress, cred.password);
             if(!userCred.user.emailVerified) {
@@ -81,7 +82,7 @@ export class Database {
     }
     static feedbackMess(feedbackId, mess) {
         const feedback = document.getElementById(`${feedbackId}`);
-        feedback.classList.remove('form__input--hidden');
+        feedback.classList.remove('form__element--hidden');
         feedback.innerHTML = `${mess}`;
     }
     static logOut() { 

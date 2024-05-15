@@ -11,7 +11,7 @@ export const galleryInit = [
     {title: 'Lack surrounded by mountains', src: '/src/img/lackAndMountains.jpg'},
     {title: 'Colored face', src: '/src/img/coloredFace.jpg'},
     {title: 'ToukTouk', src: '/src/img/touktouk.jpg'},
-    {title: 'Face painting on wall', src: '/src/img/faceOnWall.jpg'},
+    {title: 'A painting of a face on wall', src: '/src/img/faceOnWall.jpg'},
     {title: 'Zebra', src: '/src/img/zebra.jpg'},
     {title: 'Zebra women', src: '/src/img/zebraWomen.jpg'},
     {title: 'Lack', src: '/src/img/lack.jpg'},

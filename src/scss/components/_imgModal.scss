@@ -1,7 +1,7 @@
 .imgModal {
     position: fixed;
     z-index: 800000;
-    inset: 0 0 0 0;
     background-color: var(--black);
     @include flexColumnCenter; 
+    &--visible { inset: 0 0 0 0; }
 }

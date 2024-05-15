@@ -1,7 +1,7 @@
 import { Form } from "./form";
 import { Database } from "../data/database";
 
-export class Auth extends Form{
+export class AuthForm extends Form{
     constructor(rootId) {
         super();
         this.rootEl = document.getElementById(`${rootId}`);

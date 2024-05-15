@@ -2,10 +2,15 @@ import '../scss/main.scss';
 import { Database } from "./data/database";
 import { ImgGallery } from './ui/imgGallery'
 import { galleryInit } from './data/imgGalleryInit';
+import { CollectionForm } from "./ui/collectionForm";
+import { ImgModal } from './ui/imgModal';
 
 
 export class User {
     static user;
+    static collForm = new CollectionForm('page');
+    static imgModal = new ImgModal('page');
+
     static init() { 
        this.addEventLstns();
        this.user = JSON.parse(sessionStorage.getItem('user'));
