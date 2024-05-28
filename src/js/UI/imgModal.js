@@ -1,7 +1,7 @@
 export class ImgModal {
     constructor(rootId) {
-        this.rootEl = document.getElementById(`${rootId}`);
-        this.rootEl.insertAdjacentHTML('beforeend', this.createModal());
+        this.root = document.getElementById(`${rootId}`);
+        this.root.insertAdjacentHTML('beforeend', this.createModal());
         //Add click Listener to hide imgModal
         const closingImgForm = document.getElementById('closingImgForm');
         closingImgForm.addEventListener('click', ()=> {
@@ -33,12 +33,11 @@ export class ImgModal {
     }
     display(imgObj) {
         const imgModal = document.querySelector('.imgModal');
-        const img = imgModal.querySelector('img');
-        img.src = ``;
-        img.src = `${imgObj.src}`;
+        const img =  imgModal.querySelector('img');
+        img.src ='';
+        img.src = `${imgObj.imgSrc}`;
+        img.alt = `${imgObj.title}`;
         imgModal.classList.add('imgModal--visible');
         imgModal.querySelector('.imgWindow__imgTitle').textContent = `${imgObj.title.toUpperCase()}`;
-        
-       
     }
 }

@@ -3,11 +3,11 @@
     width: 100%;
     position: fixed;
     right: -100%;
-    z-index: 900000;
+    z-index: 800000;
     top: 0; 
     bottom: 0;
     background-color: var(--formModal-BckGrd);
     transition-duration: 0.5s;
     &--slide { right: 0; }
-    &--static { @include breakpoint(large) { position: static; } }
+    &--static { @include breakpoint(large) { position: static; }}
 }

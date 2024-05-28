@@ -1,4 +1,4 @@
-.formBtn { 
+.btn { 
     width: 100%;
     background-color: var(--form-btn); 
     color: var(--form-btnText);
@@ -7,4 +7,12 @@
         background-color: var(--form-btnBckHover);
         color: var(--form-btnTextHover);
     }
+}
+.btnLoading {
+    width: 100%;
+    background-color: transparent;
+    color: var(--form-btnText);
+    border: none;
+    font-size: 0.875rem;
+    @include breakpoint(medium) { font-size: 1rem; }
 }

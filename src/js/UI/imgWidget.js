@@ -1,40 +1,44 @@
-import { User } from '../user';
+import { Ui } from './userInt';
 
 export class ImgWidget {
-    constructor(imgObj, id, rootEl) {
+    constructor(imgObj, icons, root ) {
         this.imgObj = imgObj;
-        this.id = id;
-        this.rootEl = rootEl;
-        this.create(this.imgObj, this.id, this.rootEl);
+        this.icons = icons;
+        this.root = root;
+        this.create(this.imgObj, this.root, this.icons);
     }
-    create(imgObj, id, rootEl) {
-        const widget = `
-            <div class="widget" id="widget-${id}">
-                <img loading="lazy" src=${imgObj.src}>
-                <ul class="iconBar">
-                    <li class="iconBar__icon" id="expand"><i class="fa-solid fa-expand"></i></li>
-                    <li class="iconBar__icon" id="favorite"><i class="fa-solid fa-heart"></i></li>
-                    <li class="iconBar__icon" id="download"><i class="fa-solid fa-download"></i></li>
-                </ul>
-            </div>
+    create(imgObj, root, icons) {
+        const widget = document.createElement('div');
+        widget.classList.add('widget');
+        widget.id= `widget-${imgObj.id}`;
+        root.insertAdjacentElement('beforeend', widget);
+        widget.innerHTML = `
+            <img loading="lazy" src=${imgObj.imgSrc}>
+            <ul class="iconBar">${this.addIcons(icons, imgObj.id)}</ul>
         `
-        rootEl.insertAdjacentHTML('beforeend', widget);
-        this.addEventLstns(`widget-${id}`);
+        this.addEventLstns(widget.id, imgObj, icons);
     }
-     addEventLstns(widgetId) {
-        const widgetEl = document.getElementById(`${widgetId}`);
-        widgetEl.querySelector('#favorite').addEventListener('click', ()=> {
-            User.collForm.display('formModal--slide', this.imgObj);
+    addIcons(icons, imgObjId) {
+        let iconBar = '';
+        icons.map((icon)=> {
+            iconBar +=
+            `<li class="iconBar__icon" id=${icon.name}-${imgObjId}>
+                <i class="${icon.class}"></i>
+            </li>`
         })
-        widgetEl.querySelector('#expand').addEventListener('click', ()=> {
-            User.imgModal.display(this.imgObj);
-        })
-        widgetEl.querySelector('img').addEventListener('click', ()=> {
-            User.imgModal.display(this.imgObj);
-        })
-       
+        return iconBar;
     }
-}
-
-
-            
+    addEventLstns(widgetId, imgObj, icons) {
+        const widget = document.getElementById(`${widgetId}`);
+        widget.querySelector('img').addEventListener('click', ()=> {
+            Ui.displayImgModal(this.imgObj);
+        })
+        icons.map((icon)=> {
+            const iconElmt = widget.querySelector(`#${icon.name}-${imgObj.id}`);
+            iconElmt.addEventListener(`${icon.event}`,(event)=> {
+                icon.prevDefault ? event.preventDefault() : null;
+                icon.func(this.imgObj);
+            });
+        }) 
+    }
+}      

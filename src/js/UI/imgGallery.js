@@ -1,16 +1,13 @@
 import { ImgWidget } from "./imgWidget";
 
 export class ImgGallery {
-    constructor(imgArray) {
-        this.rootEl = document.querySelector('.gallery__pictures');
+    constructor(imgArray, icons) {
         this.imgArray = imgArray;
-        this.renderImgWidgets(this.imgArray, this.rootEl);
+        this.icons = icons;
+        this.root = document.querySelector('.gallery__pictures');
+        this.renderImgWidgets(this.imgArray, this.icons, this.root);
     }
-    renderImgWidgets(imgArray, rootEl) { 
-        let id = 0;
-        imgArray.forEach(imgObj => {
-            new ImgWidget(imgObj, id, rootEl);
-            id ++;
-        });
+    renderImgWidgets(imgArray, icons, root) { 
+        imgArray.forEach(imgObj => { new ImgWidget(imgObj, icons, root); });
     }
 }

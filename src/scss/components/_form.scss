@@ -51,7 +51,6 @@
         background-color: transparent;
         color: var(--white);
     }
-   /*  &__input--hidden { @include hidden; } */
     &__element--hidden { @include hidden; }
     &__errorMess { color: var(--error); }
     &__validation { 

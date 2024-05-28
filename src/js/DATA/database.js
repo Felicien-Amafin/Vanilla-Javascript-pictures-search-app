@@ -39,7 +39,6 @@ export class Database {
     }
     static async logIn(cred) {
         try {
-            console.log('login')
             document.getElementById('formBtn').disabled = true; 
             const userCred = await signInWithEmailAndPassword(auth, cred.emailAdress, cred.password);
             if(!userCred.user.emailVerified) {
@@ -75,7 +74,6 @@ export class Database {
             this.feedbackMess('confirmation', `A password recovery mail has been sent.`);
             sendBtn.disabled = false;
         } catch(error) {
-            console.log(error.code)
             this.feedbackMess('errorField', error.code);
             document.getElementById('pwdRecoveryBtn').disabled = false;
         }

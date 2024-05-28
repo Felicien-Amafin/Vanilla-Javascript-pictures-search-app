@@ -3,12 +3,12 @@ import { Form } from "./form";
 export class CollectionForm extends Form{
     constructor(rootId) {
         super();
-        this.rootEl = document.getElementById(`${rootId}`);
-        this.create(this.rootEl, this.modalEl); 
+        this.root = document.getElementById(`${rootId}`);
+        this.create(this.root, this.modal); 
     }
-    create(rootEl, modalEl) {
-        rootEl.insertAdjacentElement('beforeend', modalEl);
-        modalEl.innerHTML = `
+    create(root, modal) {
+        root.insertAdjacentElement('beforeend', modal);
+        modal.innerHTML = `
             <button class="closingCross formModal__closingCross" id="closingCollForm" type="button" aria-label="Close window">
                 <i class="fa-solid fa-xmark" title="close"></i>
             </button>
@@ -33,8 +33,8 @@ export class CollectionForm extends Form{
     }
     initFormContent(formId) {
         document.getElementById(`${formId}`).innerHTML = `
-        <input class="form__input formTab" type="text" id="createColl" placeholder="Chose a name" autocomplete="off">
-        <div class="form__selection formTab form__element--hidden" id="selectColl">
+        <input class="form__input tab" type="text" id="createColl" placeholder="Chose a name" autocomplete="off">
+        <div class="form__selection tab form__element--hidden" id="selectColl">
             <select name="collection-select">
                 <option>Select a collection</option>  
             </select>
@@ -42,5 +42,7 @@ export class CollectionForm extends Form{
         </div>
         `
     }
-    display(className) { this.modalEl.classList.add(`${className}`); }
+    display(imgObj) { 
+        this.modal.classList.add('formModal--slide'); 
+    }
 }
