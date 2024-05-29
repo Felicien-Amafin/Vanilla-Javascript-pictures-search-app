@@ -1,15 +1,13 @@
-import { CollectionForm } from './collectionForm';
-import { ImgModal } from './imgModal';
 
 export class Ui {
-    static collForm = new CollectionForm('page');
-    static imgModal = new ImgModal('page');
+    static collForm;
+    static imgModal;
     static startingPageElmts = ['banner', 'collections'];
     static uiStatus = { startingPage:'startingP', searchPage:'searchP', status: 'startingP' };
 
-    static update(funcArray) {
+  /*   static update(funcArray) {
         funcArray.map((func)=> { func(); });
-    }
+    } */
     static hideStartingPageElmts() {
         Ui.startingPageElmts.map((id)=> {
             document.getElementById(`${id}`).style.display = "none";
@@ -24,7 +22,11 @@ export class Ui {
     }
     static displayCollForm(imgObj) {
         Ui.collForm.display(imgObj);
+        console.log(imgObj)
     }
+   /*  static removeCollForm() {
+        Ui.collForm.removeCollForm();
+    } */
     static displayImgModal(imgObj) {
         Ui.imgModal.display(imgObj);
     }

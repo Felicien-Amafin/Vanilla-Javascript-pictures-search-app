@@ -17,11 +17,7 @@ export class CollectionForm extends Form{
         this.addMenuClickEv('menuTab1', 'menuTab2', this.createTab.bind(this));
         this.addMenuClickEv('menuTab2', 'menuTab1', this.addTab.bind(this));
         this.initFormContent('form');
-        //Add click Listener to hide Collectionform
-        const closingCollForm = document.getElementById('closingCollForm');
-        closingCollForm.addEventListener('click', ()=> {
-            document.querySelector('.formModal').classList.remove('formModal--slide');
-        })
+        this.addEventLis();
     }
     createTab() {
         this.updateForm(['createColl'], ['selectColl', 'createColl'], 'form__element--hidden');
@@ -43,6 +39,9 @@ export class CollectionForm extends Form{
         `
     }
     display(imgObj) { 
-        this.modal.classList.add('formModal--slide'); 
+        document.getElementById('formModal').classList.add('formModal--slide'); 
     }
+    removeCollForm() { document.getElementById('formModal').classList.remove('formModal--slide'); }
+    addEventLis() { document.getElementById('closingCollForm').addEventListener('click', this.removeCollForm); }
+
 }

@@ -1,4 +1,4 @@
-import { Ui } from './userInt';
+import { Ui } from './userInterface';
 
 export class ImgWidget {
     constructor(imgObj, icons, root ) {
@@ -31,7 +31,7 @@ export class ImgWidget {
     addEventLstns(widgetId, imgObj, icons) {
         const widget = document.getElementById(`${widgetId}`);
         widget.querySelector('img').addEventListener('click', ()=> {
-            Ui.displayImgModal(this.imgObj);
+            Ui.imgModal.display(this.imgObj);
         })
         icons.map((icon)=> {
             const iconElmt = widget.querySelector(`#${icon.name}-${imgObj.id}`);

@@ -1,4 +1,4 @@
-import { Ui } from '../ui/userInt';
+import { Ui } from '../ui/userInterface';
 import { Api } from './api';
 
 export const galleryInit = [

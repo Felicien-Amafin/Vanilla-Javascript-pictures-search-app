@@ -3,17 +3,23 @@ import { Database } from './data/database';
 import { ImgGallery } from './ui/imgGallery'
 import { galleryInit, icons } from './data/imgData';
 import { Api } from './data/api';
+import { CollectionForm } from './ui/collectionForm';
+import { ImgModal } from './ui/imgModal';
+import { Ui } from './ui/userInterface';
 
 class User {
     static user;
     
     static init() { 
+       Ui.collForm = new CollectionForm('page');
+       Ui.imgModal = new ImgModal('page');
        this.addEventLstns();
        this.user = JSON.parse(sessionStorage.getItem('user'));
        let userName =  this.user[1].userName;
        userName = userName.length > 8 ? `${userName.substring(0, 9)}...`: userName;
        document.getElementById('userName').textContent = userName;
        new ImgGallery(galleryInit, [icons.expand, icons.favorite, icons.download]);
+       
     }
     static addEventLstns() {
         //Load new image search 

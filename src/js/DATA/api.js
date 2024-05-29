@@ -1,6 +1,6 @@
 import { ImgGallery } from '../ui/imgGallery'
 import { icons } from './imgData'
-import { Ui } from '../ui/userInt'
+import { Ui } from '../ui/userInterface'
 
 export class Api {
     static accessKey = '8gH4g1Qmp3wjuE8n1VEBtf-VmJP7lHMKLaBvIdqSfhU';

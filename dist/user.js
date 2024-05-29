@@ -36823,7 +36823,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _ui_imgGallery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../ui/imgGallery */ "./src/js/ui/imgGallery.js");
 /* harmony import */ var _imgData__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./imgData */ "./src/js/data/imgData.js");
-/* harmony import */ var _ui_userInt__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../ui/userInt */ "./src/js/ui/userInt.js");
+/* harmony import */ var _ui_userInterface__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../ui/userInterface */ "./src/js/ui/userInterface.js");
 
 
 
@@ -36841,9 +36841,9 @@ class Api {
         if(searchTerm) {
             this.pageNum = 1;
             this.searchTerm = searchTerm;
-            _ui_userInt__WEBPACK_IMPORTED_MODULE_2__.Ui.uiStatus.status === _ui_userInt__WEBPACK_IMPORTED_MODULE_2__.Ui.uiStatus.startingPage ? _ui_userInt__WEBPACK_IMPORTED_MODULE_2__.Ui.hideStartingPageElmts() : null;
+            _ui_userInterface__WEBPACK_IMPORTED_MODULE_2__.Ui.uiStatus.status === _ui_userInterface__WEBPACK_IMPORTED_MODULE_2__.Ui.uiStatus.startingPage ? _ui_userInterface__WEBPACK_IMPORTED_MODULE_2__.Ui.hideStartingPageElmts() : null;
             const title = `Results for "${this.searchTerm}"`;
-            _ui_userInt__WEBPACK_IMPORTED_MODULE_2__.Ui.updateGallery(title);
+            _ui_userInterface__WEBPACK_IMPORTED_MODULE_2__.Ui.updateGallery(title);
             this.fetchImgForGallery(this.searchTerm, this.pageNum, this.perPageNum); 
         }
     }
@@ -37021,7 +37021,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   galleryInit: () => (/* binding */ galleryInit),
 /* harmony export */   icons: () => (/* binding */ icons)
 /* harmony export */ });
-/* harmony import */ var _ui_userInt__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../ui/userInt */ "./src/js/ui/userInt.js");
+/* harmony import */ var _ui_userInterface__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../ui/userInterface */ "./src/js/ui/userInterface.js");
 /* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./api */ "./src/js/data/api.js");
 
 
@@ -37047,10 +37047,10 @@ const galleryInit = [
 ]
 
 const icons = { 
-    expand: { name: "expand", class: "fa-solid fa-expand", event: "click", prevDefault: false, func: _ui_userInt__WEBPACK_IMPORTED_MODULE_0__.Ui.displayImgModal },
-    favorite: { name: "favorite", class: "fa-solid fa-heart", event: "click", prevDefault: false, func: _ui_userInt__WEBPACK_IMPORTED_MODULE_0__.Ui.displayCollForm },
+    expand: { name: "expand", class: "fa-solid fa-expand", event: "click", prevDefault: false, func: _ui_userInterface__WEBPACK_IMPORTED_MODULE_0__.Ui.displayImgModal },
+    favorite: { name: "favorite", class: "fa-solid fa-heart", event: "click", prevDefault: false, func: _ui_userInterface__WEBPACK_IMPORTED_MODULE_0__.Ui.displayCollForm },
     download: { name: "download", class: "fa-solid fa-download", event: "click", prevDefault: false, func: _api__WEBPACK_IMPORTED_MODULE_1__.Api.downloadImg },
-    delete: { name: "delete", class: "fa-regular fa-trash-can", event: "click", prevDefault: false, func: _ui_userInt__WEBPACK_IMPORTED_MODULE_0__.Ui.deleteImgWidget },
+    delete: { name: "delete", class: "fa-regular fa-trash-can", event: "click", prevDefault: false, func: _ui_userInterface__WEBPACK_IMPORTED_MODULE_0__.Ui.deleteImgWidget },
 }
 
 
@@ -37086,11 +37086,7 @@ class CollectionForm extends _form__WEBPACK_IMPORTED_MODULE_0__.Form{
         this.addMenuClickEv('menuTab1', 'menuTab2', this.createTab.bind(this));
         this.addMenuClickEv('menuTab2', 'menuTab1', this.addTab.bind(this));
         this.initFormContent('form');
-        //Add click Listener to hide Collectionform
-        const closingCollForm = document.getElementById('closingCollForm');
-        closingCollForm.addEventListener('click', ()=> {
-            document.querySelector('.formModal').classList.remove('formModal--slide');
-        })
+        this.addEventLis();
     }
     createTab() {
         this.updateForm(['createColl'], ['selectColl', 'createColl'], 'form__element--hidden');
@@ -37112,8 +37108,11 @@ class CollectionForm extends _form__WEBPACK_IMPORTED_MODULE_0__.Form{
         `
     }
     display(imgObj) { 
-        this.modal.classList.add('formModal--slide'); 
+        document.getElementById('formModal').classList.add('formModal--slide'); 
     }
+    removeCollForm() { document.getElementById('formModal').classList.remove('formModal--slide'); }
+    addEventLis() { document.getElementById('closingCollForm').addEventListener('click', this.removeCollForm); }
+
 }
 
 /***/ }),
@@ -37219,28 +37218,30 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   ImgModal: () => (/* binding */ ImgModal)
 /* harmony export */ });
+/* harmony import */ var _data_api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../data/api */ "./src/js/data/api.js");
+/* harmony import */ var _userInterface__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./userInterface */ "./src/js/ui/userInterface.js");
+
+
+
 class ImgModal {
     constructor(rootId) {
         this.root = document.getElementById(`${rootId}`);
         this.root.insertAdjacentHTML('beforeend', this.createModal());
-        //Add click Listener to hide imgModal
-        const closingImgForm = document.getElementById('closingImgForm');
-        closingImgForm.addEventListener('click', ()=> {
-            document.querySelector('.imgModal').classList.remove('imgModal--visible');
-        })
+        this.imgObj;
+        this.addEventLis(['closingImgForm', 'imgMcollIcon', 'imgMdownloadIcon']);
     }
     createModal() {
         return `
-            <div class="imgModal">
+            <div class="imgModal" id="imgModal">
                 <button class="closingCross" type="button" id="closingImgForm" aria-label="Close window">
                     <i class="fa-solid fa-xmark" title="close"></i>
                 </button>
                 <div class="imgWindow">
                     <div class="imgWindow__flexIcons">
-                        <button class="imgWindow__icon" type="button" aria-label="Open collection form" title="Collection" id="collectionI">
+                        <button class="imgWindow__icon" id="imgMcollIcon"type="button" aria-label="Open collection form" title="Collection" id="collectionI">
                             <i class="fa-solid fa-heart"></i>
                         </button>
-                        <button class="imgWindow__icon" type="button" aria-label="Download image" title="Download" id="downloadI">
+                        <button class="imgWindow__icon" id="imgMdownloadIcon" type="button" aria-label="Download image" title="Download" id="downloadI">
                             <i class="fa-solid fa-download"></i>
                         </button>
                     </div>
@@ -37253,6 +37254,7 @@ class ImgModal {
         `
     }
     display(imgObj) {
+        this.imgObj = imgObj;
         const imgModal = document.querySelector('.imgModal');
         const img =  imgModal.querySelector('img');
         img.src ='';
@@ -37260,6 +37262,19 @@ class ImgModal {
         img.alt = `${imgObj.title}`;
         imgModal.classList.add('imgModal--visible');
         imgModal.querySelector('.imgWindow__imgTitle').textContent = `${imgObj.title.toUpperCase()}`;
+    }
+    removeImgModal() { document.getElementById('imgModal').classList.remove('imgModal--visible'); }
+    addEventLis(idsArray) {
+        idsArray.map((id)=> {
+            document.getElementById(`${id}`).addEventListener('click', ()=> {
+                id === 'imgMdownloadIcon'? _data_api__WEBPACK_IMPORTED_MODULE_0__.Api.downloadImg(this.imgObj) : null;
+                id === 'closingImgForm' ? this.removeImgModal() : null;
+                if(id === 'imgMcollIcon') { 
+                    this.removeImgModal();
+                    _userInterface__WEBPACK_IMPORTED_MODULE_1__.Ui.displayCollForm(this.imgObj);
+                } 
+            })
+        })
     }
 }
 
@@ -37275,7 +37290,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   ImgWidget: () => (/* binding */ ImgWidget)
 /* harmony export */ });
-/* harmony import */ var _userInt__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./userInt */ "./src/js/ui/userInt.js");
+/* harmony import */ var _userInterface__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./userInterface */ "./src/js/ui/userInterface.js");
 
 
 class ImgWidget {
@@ -37309,7 +37324,7 @@ class ImgWidget {
     addEventLstns(widgetId, imgObj, icons) {
         const widget = document.getElementById(`${widgetId}`);
         widget.querySelector('img').addEventListener('click', ()=> {
-            _userInt__WEBPACK_IMPORTED_MODULE_0__.Ui.displayImgModal(this.imgObj);
+            _userInterface__WEBPACK_IMPORTED_MODULE_0__.Ui.imgModal.display(this.imgObj);
         })
         icons.map((icon)=> {
             const iconElmt = widget.querySelector(`#${icon.name}-${imgObj.id}`);
@@ -37323,30 +37338,26 @@ class ImgWidget {
 
 /***/ }),
 
-/***/ "./src/js/ui/userInt.js":
-/*!******************************!*\
-  !*** ./src/js/ui/userInt.js ***!
-  \******************************/
+/***/ "./src/js/ui/userInterface.js":
+/*!************************************!*\
+  !*** ./src/js/ui/userInterface.js ***!
+  \************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   Ui: () => (/* binding */ Ui)
 /* harmony export */ });
-/* harmony import */ var _collectionForm__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./collectionForm */ "./src/js/ui/collectionForm.js");
-/* harmony import */ var _imgModal__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./imgModal */ "./src/js/ui/imgModal.js");
-
-
 
 class Ui {
-    static collForm = new _collectionForm__WEBPACK_IMPORTED_MODULE_0__.CollectionForm('page');
-    static imgModal = new _imgModal__WEBPACK_IMPORTED_MODULE_1__.ImgModal('page');
+    static collForm;
+    static imgModal;
     static startingPageElmts = ['banner', 'collections'];
     static uiStatus = { startingPage:'startingP', searchPage:'searchP', status: 'startingP' };
 
-    static update(funcArray) {
+  /*   static update(funcArray) {
         funcArray.map((func)=> { func(); });
-    }
+    } */
     static hideStartingPageElmts() {
         Ui.startingPageElmts.map((id)=> {
             document.getElementById(`${id}`).style.display = "none";
@@ -37361,7 +37372,11 @@ class Ui {
     }
     static displayCollForm(imgObj) {
         Ui.collForm.display(imgObj);
+        console.log(imgObj)
     }
+   /*  static removeCollForm() {
+        Ui.collForm.removeCollForm();
+    } */
     static displayImgModal(imgObj) {
         Ui.imgModal.display(imgObj);
     }
@@ -40575,6 +40590,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ui_imgGallery__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ui/imgGallery */ "./src/js/ui/imgGallery.js");
 /* harmony import */ var _data_imgData__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./data/imgData */ "./src/js/data/imgData.js");
 /* harmony import */ var _data_api__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./data/api */ "./src/js/data/api.js");
+/* harmony import */ var _ui_collectionForm__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ui/collectionForm */ "./src/js/ui/collectionForm.js");
+/* harmony import */ var _ui_imgModal__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./ui/imgModal */ "./src/js/ui/imgModal.js");
+/* harmony import */ var _ui_userInterface__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./ui/userInterface */ "./src/js/ui/userInterface.js");
+
+
+
 
 
 
@@ -40585,12 +40606,15 @@ class User {
     static user;
     
     static init() { 
+       _ui_userInterface__WEBPACK_IMPORTED_MODULE_7__.Ui.collForm = new _ui_collectionForm__WEBPACK_IMPORTED_MODULE_5__.CollectionForm('page');
+       _ui_userInterface__WEBPACK_IMPORTED_MODULE_7__.Ui.imgModal = new _ui_imgModal__WEBPACK_IMPORTED_MODULE_6__.ImgModal('page');
        this.addEventLstns();
        this.user = JSON.parse(sessionStorage.getItem('user'));
        let userName =  this.user[1].userName;
        userName = userName.length > 8 ? `${userName.substring(0, 9)}...`: userName;
        document.getElementById('userName').textContent = userName;
        new _ui_imgGallery__WEBPACK_IMPORTED_MODULE_2__.ImgGallery(_data_imgData__WEBPACK_IMPORTED_MODULE_3__.galleryInit, [_data_imgData__WEBPACK_IMPORTED_MODULE_3__.icons.expand, _data_imgData__WEBPACK_IMPORTED_MODULE_3__.icons.favorite, _data_imgData__WEBPACK_IMPORTED_MODULE_3__.icons.download]);
+       
     }
     static addEventLstns() {
         //Load new image search 
