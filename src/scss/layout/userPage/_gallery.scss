@@ -32,5 +32,11 @@
             &:hover { transform: scale(1.2); }
         }
     }
+    &__feedback { 
+        color: var(--white);
+        font-size: 0.875rem;
+        text-align: center;
+        @include breakpoint(medium) { font-size: 1rem; }
+    }
 }
     

@@ -6,26 +6,33 @@ export class Api {
     static accessKey = '8gH4g1Qmp3wjuE8n1VEBtf-VmJP7lHMKLaBvIdqSfhU';
     static searchTerm;
     static pageNum;
+    static prevResult;
     static perPageNum = 15;
 
-    static newImgSearch(inputId){
+    static async newImgSearch(inputId){
         const input = document.getElementById(`${inputId}`);
         const searchTerm = input.value.trim().toLowerCase();
         input.value = '';
         if(searchTerm) {
             this.pageNum = 1;
             this.searchTerm = searchTerm;
+            this.prevResult = false;
+            //Update Gallery
             Ui.uiStatus.status === Ui.uiStatus.startingPage ? Ui.hideStartingPageElmts() : null;
-            const title = `Results for "${this.searchTerm}"`;
-            Ui.updateGallery(title);
-            this.fetchImgForGallery(this.searchTerm, this.pageNum, this.perPageNum); 
+            Ui.deleteGalleryContent();
+            Ui.hideLoadMoreBtn();// if made visible from previous search
+            Ui.showSearchFeedBack();
+            await this.fetchImgForGallery(this.searchTerm, this.pageNum, this.perPageNum); 
+            Ui.hideSearchFeedBack();
         }
     }
     static async loadMoreImg() {
-        this.pageNum ++;
-        //updateLoadMoreBtn
-        await this.fetchImgForGallery(this.searchTerm, this.pageNum, this.perPageNum);
-        //updateLoadMoreBtn
+        if(this.searchTerm) {
+            this.pageNum ++;
+            Ui.updateLoadMoreBtn('Loading...', true);
+            await this.fetchImgForGallery(this.searchTerm, this.pageNum, this.perPageNum);
+            Ui.updateLoadMoreBtn('Load more', false);
+        }
     }
     static async fetchImgForGallery(searchTerm, pageNum, perPageNum) {
         try {
@@ -34,11 +41,18 @@ export class Api {
             const data = await response.json();
             const dataArray = this.extractData(data.results);
             if(dataArray.length > 0 ) {
-                new ImgGallery(dataArray, [icons.expand, icons.favorite, icons.download]);  
-            } else { alert('Found no images corresponding to your search'); }
-        } catch (error) {
-            alert('Failed to load image gallery...');
-        }
+                if(!this.prevResult) {
+                    Ui.changeGalleryTitle(`Results for "${this.searchTerm}"`);
+                    Ui.showLoadMoreBtn(); 
+                }
+                new ImgGallery(dataArray, [icons.expand, icons.favorite, icons.download]);
+                this.prevResult = true;
+            } else if (dataArray.length === 0 && this.prevResult) {
+                alert(`No more images for "${searchTerm}"`); 
+            } else { 
+                Ui.changeGalleryTitle(`No results for "${this.searchTerm}"`);
+            }
+        } catch (error) { alert('Failed to load image gallery...'); }
     }
     static extractData(dataArray) {
         const result = [];

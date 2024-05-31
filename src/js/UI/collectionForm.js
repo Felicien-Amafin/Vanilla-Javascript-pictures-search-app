@@ -40,8 +40,8 @@ export class CollectionForm extends Form{
     }
     display(imgObj) { 
         document.getElementById('formModal').classList.add('formModal--slide'); 
+        console.log(imgObj)
     }
     removeCollForm() { document.getElementById('formModal').classList.remove('formModal--slide'); }
     addEventLis() { document.getElementById('closingCollForm').addEventListener('click', this.removeCollForm); }
-
 }

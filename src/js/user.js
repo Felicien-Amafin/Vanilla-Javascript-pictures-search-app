@@ -18,8 +18,7 @@ class User {
        let userName =  this.user[1].userName;
        userName = userName.length > 8 ? `${userName.substring(0, 9)}...`: userName;
        document.getElementById('userName').textContent = userName;
-       new ImgGallery(galleryInit, [icons.expand, icons.favorite, icons.download]);
-       
+       new ImgGallery(galleryInit, [icons.expand, icons.favorite, icons.download]);  
     }
     static addEventLstns() {
         //Load new image search 
@@ -31,7 +30,7 @@ class User {
             event.preventDefault();
             Api.newImgSearch('slidingSbInput');
         })
-        //Load more image  
+        //Load more images
         document.getElementById('loadMoreBtn').addEventListener('click', ()=> { Api.loadMoreImg(); })
         //Show slidingSbubble
         document.getElementById('headerSearchIcon').addEventListener('click', ()=> {
