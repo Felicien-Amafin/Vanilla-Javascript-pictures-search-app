@@ -46,5 +46,4 @@ export class Form {
         if(!errorList.classList.contains('form__element--hidden')) { errorList.classList.add('form__element--hidden'); }
         if(!validation.classList.contains('form__element--hidden')) { validation.classList.add('form__element--hidden'); }
     }
-    updateBtnTxt(btnTxt) { document.getElementById('formBtn').textContent = btnTxt; }
 }

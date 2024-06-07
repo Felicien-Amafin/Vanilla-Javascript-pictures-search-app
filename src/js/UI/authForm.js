@@ -52,6 +52,7 @@ export class AuthForm extends Form{
         this.updateBtnTxt('Log in');
         this.credentials.userName = '';
     }
+    updateBtnTxt(btnTxt) { document.getElementById('formBtn').textContent = btnTxt; }
     initFormContent(formId) {
         document.getElementById(`${formId}`).innerHTML = `
             <input class="tab form__input " type="text" id="userName" placeholder="User name" autocomplete="off">

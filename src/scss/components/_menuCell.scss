@@ -1,4 +1,5 @@
 .menuCell {
+    @include flexRow;
     width: 100%;
     height: auto;
     padding: 16px;
@@ -9,12 +10,19 @@
     font-size: 0.875rem;
     color: var(--menuCellText);
     margin-bottom: 14px;
-    border-radius: 7px;
+    border-radius: 4px;
     @include breakpoint(medium) { font-size: 1rem;}
-    &:hover {
-        transition-duration: 0.3s;
-        transition-delay: 0.1s;
-        background-color: var(--menuCellHover);
-        border-radius: 8px;
+    &:hover { background-color: var(--menuCellHover); }
+    &:hover &__icon { visibility: visible; }
+    &:hover &__text { color: var(--white); }
+    &__text {
+        width: 90%;
+        text-align: center;
+    }
+    &__icon {
+        width: 10%;
+        text-align: center;
+        visibility: hidden;
+        &:hover { color: var(--white); }
     }
 }

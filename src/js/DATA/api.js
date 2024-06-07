@@ -17,6 +17,7 @@ export class Api {
             this.pageNum = 1;
             this.searchTerm = searchTerm;
             this.prevResult = false;
+            if(window.scrollY > 0) { scrollTo(0,0); }
             //Update Gallery
             Ui.uiStatus.status === Ui.uiStatus.startingPage ? Ui.hideStartingPageElmts() : null;
             Ui.deleteGalleryContent();
@@ -60,7 +61,6 @@ export class Api {
             const newObj = {
                 id: obj.id,
                 title: obj.alt_description,
-                img: obj.urls.regular,
                 imgSrc: obj.urls.regular,
             }
             result.push(newObj);
@@ -75,14 +75,18 @@ export class Api {
             anchorTag.href = imgObj.imgSrc;
         } else {
             const link = await Api.fetchImgToDwnld(imgObj.imgSrc);
-            anchorTag.href = link
+            anchorTag.href = link;
         }
         anchorTag.click();
     }
     static async fetchImgToDwnld(src) {
-        const response = await fetch(src);
-        const blob = await response.blob();
-        return URL.createObjectURL(blob);
+        try {
+            const response = await fetch(src);
+            const blob = await response.blob();
+            return URL.createObjectURL(blob);
+        } catch {
+            alert(`Failed to dowload image.`)
+        }
     }
 }
 

@@ -8,17 +8,18 @@ import { ImgModal } from './ui/imgModal';
 import { Ui } from './ui/userInterface';
 
 class User {
-    static user;
-    
-    static init() { 
-       Ui.collForm = new CollectionForm('page');
+    static  init() { 
+       const userId = JSON.parse(sessionStorage.getItem('user')); 
+       Database.getUser(userId) // Get user from database
+       .then((userData) => {
+            Ui.collForm = new CollectionForm('page', userData, userId);
+            let userName =  userData.userName;
+            userName = userName.length > 8 ? `${userName.substring(0, 9)}...`: userName;
+            document.getElementById('userName').textContent = userName;//Display userName on Ui
+       });
        Ui.imgModal = new ImgModal('page');
+       new ImgGallery(galleryInit, [icons.expand, icons.favorite, icons.download]);
        this.addEventLstns();
-       this.user = JSON.parse(sessionStorage.getItem('user'));
-       let userName =  this.user[1].userName;
-       userName = userName.length > 8 ? `${userName.substring(0, 9)}...`: userName;
-       document.getElementById('userName').textContent = userName;
-       new ImgGallery(galleryInit, [icons.expand, icons.favorite, icons.download]);  
     }
     static addEventLstns() {
         //Load new image search 

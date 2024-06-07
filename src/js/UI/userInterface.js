@@ -2,6 +2,7 @@
 export class Ui {
     static collForm;
     static imgModal;
+    static menu;
     static startingPageElmts = ['banner', 'collections'];
     static uiStatus = { startingPage:'startingP', searchPage:'searchP', status: 'startingP' };
 
@@ -26,7 +27,7 @@ export class Ui {
     }
     static showSearchFeedBack() { document.getElementById('searchFeedback').classList.remove('none'); }
     static hideSearchFeedBack() { document.getElementById('searchFeedback').classList.add('none'); }
-    static deleteImgWidget() {
-        
-    }
+    static updateMenu() { }
+    static deleteImgWidget() {}
+
 }
