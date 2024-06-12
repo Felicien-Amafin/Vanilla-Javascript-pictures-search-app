@@ -5,6 +5,7 @@ import { galleryInit, icons } from './data/imgData';
 import { Api } from './data/api';
 import { CollectionForm } from './ui/collectionForm';
 import { ImgModal } from './ui/imgModal';
+import { CollectionsList } from './ui/CollectionsList';
 import { Ui } from './ui/userInterface';
 
 class User {
@@ -13,9 +14,10 @@ class User {
        Database.getUser(userId) // Get user from database
        .then((userData) => {
             Ui.collForm = new CollectionForm('page', userData, userId);
-            let userName =  userData.userName;
+            Ui.collList = new CollectionsList(userData.collectionsNames, userId);
+            let userName =  userData.userName; //Display userName on Ui
             userName = userName.length > 8 ? `${userName.substring(0, 9)}...`: userName;
-            document.getElementById('userName').textContent = userName;//Display userName on Ui
+            document.getElementById('userName').textContent = userName;
        });
        Ui.imgModal = new ImgModal('page');
        new ImgGallery(galleryInit, [icons.expand, icons.favorite, icons.download]);

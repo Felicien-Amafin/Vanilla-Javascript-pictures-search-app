@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore,doc, setDoc, getDoc, arrayUnion, updateDoc } from 'firebase/firestore';
+import { getFirestore,doc, setDoc, getDoc, arrayUnion, updateDoc, deleteDoc } from 'firebase/firestore';
 import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, signOut, 
 signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
 import { update } from 'firebase/database';
@@ -88,10 +88,17 @@ export class Database {
         window.location.replace('../../dist/index.html'); 
     }
     static async createColl(sortedCollNames, collName, data, userId) {
-        const docRef = doc(db, 'users', `${userId}`)
+        const docRef = doc(db, 'users', `${userId}`);
         //In database : update collectionsNames array in database
         await updateDoc(docRef, { "collectionsNames": sortedCollNames});
         //In database: Create a document in a collection named "collections" + assigned data to document
         await setDoc(doc(db, 'users', `${userId}`, 'collections', `${collName}`), { pictures: arrayUnion(data) });
+    }
+    static async deleteColl(collectionsNames, collName, userId) {
+        const docRef = doc(db, 'users', `${userId}`);
+        //In database : update collectionsNames array in database
+        await updateDoc(docRef, {"collectionsNames": collectionsNames});
+        //Delete collection specified by user
+        await deleteDoc(doc(db,'users', `${userId}`, 'collections', `${collName}`));
     }
 }

@@ -1,5 +1,6 @@
 import { Form } from "./form";
 import { Database } from "../data/database";
+import { Ui } from "./userInterface";
 
 export class CollectionForm extends Form{
     constructor(rootId, userData, userId) {
@@ -28,12 +29,12 @@ export class CollectionForm extends Form{
         this.initFormContent('form');
         this.addEventLis();
     }
-    //Ui's tab to create new img collection
+    //Form's tab to create new img collection
     createTab() {
         this.updateForm(['collNameInput'], ['selectColl', 'collNameInput'], 'form__element--hidden');
         this.formStatus = 'create';
     } 
-    //Ui's tab to update img collection
+    //Form's tab to update img collection
     updateTab() {
         this.updateForm([], ['selectColl', 'collNameInput'], 'form__element--hidden');
         this.formStatus = 'update';
@@ -51,32 +52,33 @@ export class CollectionForm extends Form{
     }
     addEventLis() { 
         document.getElementById('closingCollForm').addEventListener('click', this.hideCollForm.bind(this)); 
-        document.getElementById('form').addEventListener('submit', (event)=> {event.preventDefault()});
+        document.getElementById('form').addEventListener('submit', (event)=> {
+            event.preventDefault(); //Prevents to submit the form if user clicks enter when using collectionForm
+        });
         document.getElementById('formBtn').addEventListener('click', ()=> {
             this.formStatus === 'create' ? this.createColl(this.imgObj) : this.updateColl();
         }); 
     }
-    //Create new img collection
-    async createColl(imgObj) {
-        this.resetFeedback(this.trackFeedBackId)// Reset If needed
+    async createColl(imgObj) { //Create new img collection
+        this.resetFeedback(this.trackFeedBackId) // Reset If needed
         const collName = this.getCollName('collNameInput');
         const status = this.checkCollName(this.collectionsNames, collName, 25);
         if(status) {
+            Ui.collList.handleDefaultMess(this.collectionsNames); // Display default message if needed
             const temp = [...this.collectionsNames];
             temp.push(collName);
-            const sortedCollNames = temp.sort();
+            const sortedCollNames = temp.sort(); //Sort collections' names before sending to database
             try {
                 await Database.createColl(sortedCollNames, collName, imgObj, this.userId);
-                this.collectionsNames = temp;
+                this.collectionsNames = sortedCollNames;
+                Ui.addCollection(this.collectionsNames, collName);
                 this.feedback('validation', `"${collName}" has been added as new collection!`);
-                console.log(this.collectionsNames);
             } catch(error) { this.feedback('errorList', `${error}`); }
         } 
     }
-    //Update existing img collection
-    updateColl() {}
-    //Get collection's name form input
-    getCollName(inputId) {
+    updateColl() {} //Update existing img collection
+    
+    getCollName(inputId) { //Get collection's name form input
         let inputValue = document.getElementById(`${inputId}`).value;
         inputValue = inputValue.trim().toUpperCase();
         return inputValue;
@@ -101,8 +103,7 @@ export class CollectionForm extends Form{
             this.feedback('errorList', respectMaxLength);
         } else { return true ;}
     }
-    //Feedback to createColl/updateColl func
-    feedback(id, mess) { 
+    feedback(id, mess) { //Feedback to createColl/updateColl func
         const feedback = document.getElementById(`${id}`);
         this.trackFeedBackId = id;
         feedback.classList.remove('form__element--hidden');
@@ -114,7 +115,7 @@ export class CollectionForm extends Form{
         this.resetFeedback(this.trackFeedBackId);
         document.getElementById('formModal').classList.remove('formModal--slide'); 
     }
-    display(imgObj) { 
+    display(imgObj) { // Display form
         document.getElementById('formModal').classList.add('formModal--slide');
         this.imgObj = imgObj;
     }

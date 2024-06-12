@@ -1,7 +1,7 @@
-
 export class Ui {
     static collForm;
     static imgModal;
+    static collList;
     static menu;
     static startingPageElmts = ['banner', 'collections'];
     static uiStatus = { startingPage:'startingP', searchPage:'searchP', status: 'startingP' };
@@ -21,13 +21,11 @@ export class Ui {
     }
     static displayCollForm(imgObj) { Ui.collForm.display(imgObj); }
     static displayImgModal(imgObj) { Ui.imgModal.display(imgObj); }
+    static addCollection(collectionsNames, collName) { Ui.collList.addCollection(collectionsNames, collName); }
     static updateLoadMoreBtn(btnText, disabledValue) {
         document.getElementById('loadMoreBtn').textContent = btnText;
         document.getElementById('loadMoreBtn').disabled = disabledValue;
     }
     static showSearchFeedBack() { document.getElementById('searchFeedback').classList.remove('none'); }
     static hideSearchFeedBack() { document.getElementById('searchFeedback').classList.add('none'); }
-    static updateMenu() { }
-    static deleteImgWidget() {}
-
 }
