@@ -51051,17 +51051,22 @@ class Database {
     }
     static async createColl(sortedCollNames, collName, data, userId) {
         const docRef = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.doc)(db, 'users', `${userId}`);
-        //In database : update collectionsNames array in database
+        //In database : update collectionsNames array 
         await (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.updateDoc)(docRef, { "collectionsNames": sortedCollNames});
         //In database: Create a document in a collection named "collections" + assigned data to document
         await (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.setDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.doc)(db, 'users', `${userId}`, 'collections', `${collName}`), { pictures: (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.arrayUnion)(data) });
     }
     static async deleteColl(collectionsNames, collName, userId) {
         const docRef = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.doc)(db, 'users', `${userId}`);
-        //In database : update collectionsNames array in database
+        //In database : update collectionsNames array
         await (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.updateDoc)(docRef, {"collectionsNames": collectionsNames});
         //Delete collection specified by user
         await (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.deleteDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.doc)(db,'users', `${userId}`, 'collections', `${collName}`));
+    }
+    static async updateColl(imgObj, collName, userId) {
+        const docRef = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.doc)(db, 'users', `${userId}`, 'collections', `${collName}`);
+        //In database : update pictures array in collName doc
+        await (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.updateDoc)(docRef, {"pictures": (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.arrayUnion)(imgObj)});
     }
 }
 

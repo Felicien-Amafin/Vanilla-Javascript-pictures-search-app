@@ -1,6 +1,7 @@
 import { Form } from "./form";
 import { Database } from "../data/database";
 import { Ui } from "./userInterface";
+import { AlertAddColl } from "./alertAddColl";
 
 export class CollectionForm extends Form{
     constructor(rootId, userData, userId) {
@@ -8,7 +9,7 @@ export class CollectionForm extends Form{
         this.root = document.getElementById(`${rootId}`);
         this.userData = userData;
         this.userId = userId;
-        this.collectionsNames = userData.collectionsNames;
+        this.collectionsNames = this.userData.collectionsNames; //Init collectionsNames
         this.formStatus;
         this.imgObj;
         this.trackFeedBackId;
@@ -26,7 +27,7 @@ export class CollectionForm extends Form{
         this.addMenuClickEv('menuTab1', 'menuTab2', this.createTab.bind(this));
         this.addMenuClickEv('menuTab2', 'menuTab1', this.updateTab.bind(this));
         this.formStatus = 'create'; //Init formStatus
-        this.initFormContent('form');
+        this.initFormContent('form', this.collectionsNames);
         this.addEventLis();
     }
     //Form's tab to create new img collection
@@ -39,12 +40,16 @@ export class CollectionForm extends Form{
         this.updateForm([], ['selectColl', 'collNameInput'], 'form__element--hidden');
         this.formStatus = 'update';
     }
-    initFormContent(formId) {
+    initFormContent(formId, collectionsNames) {
         document.getElementById(`${formId}`).innerHTML = `
         <input class="form__input tab" type="text" id="collNameInput" placeholder="Chose collection's name" autocomplete="off">
         <div class="form__selection tab form__element--hidden" id="selectColl">
             <select name="collection-select" id="select">
-                <option>Select a collection</option>   
+                <option>Select a collection</option>
+                 ${collectionsNames.map((collName)=> { 
+                    return `<option>${collName}</option>`; 
+                    }) 
+                }   
             </select>
             <i class="selectArrow fa-solid fa-caret-down"></i>
         </div>
@@ -56,7 +61,7 @@ export class CollectionForm extends Form{
             event.preventDefault(); //Prevents to submit the form if user clicks enter when using collectionForm
         });
         document.getElementById('formBtn').addEventListener('click', ()=> {
-            this.formStatus === 'create' ? this.createColl(this.imgObj) : this.updateColl();
+            this.formStatus === 'create' ? this.createColl(this.imgObj) : this.updateColl(this.imgObj);
         }); 
     }
     async createColl(imgObj) { //Create new img collection
@@ -72,11 +77,26 @@ export class CollectionForm extends Form{
                 await Database.createColl(sortedCollNames, collName, imgObj, this.userId);
                 this.collectionsNames = sortedCollNames;
                 Ui.addCollection(this.collectionsNames, collName);
-                this.feedback('validation', `"${collName}" has been added as new collection!`);
+                this.hideCollForm();
+                new AlertAddColl(['Ok'], `Picture has been added to ${collName}!`);
             } catch(error) { this.feedback('errorList', `${error}`); }
         } 
     }
-    updateColl() {} //Update existing img collection
+    async updateColl(imgObj) { //Update existing img collection
+        const collName = document.getElementById('select').value;
+        this.resetFeedback('errorList') // Reset feedback if needed
+        if(collName === 'Select a collection') {
+            this.feedback('errorList', 'Please, select a collection');
+            return;
+        }
+        try {
+            document.getElementById('formBtn').disabled = true;
+            await Database.updateColl(imgObj, collName, this.userId);
+            this.hideCollForm();
+            document.getElementById('formBtn').disabled = false;
+            new AlertAddColl(['Ok'], `Picture has been added to ${collName}!`);
+        } catch(error) { this.feedback('errorList', `${error}`); }
+    } 
     
     getCollName(inputId) { //Get collection's name form input
         let inputValue = document.getElementById(`${inputId}`).value;
@@ -115,8 +135,16 @@ export class CollectionForm extends Form{
         this.resetFeedback(this.trackFeedBackId);
         document.getElementById('formModal').classList.remove('formModal--slide'); 
     }
-    display(imgObj) { // Display form
+    display(imgObj) {
+        //Update imgObj variable every display + update collections' selection
         document.getElementById('formModal').classList.add('formModal--slide');
-        this.imgObj = imgObj;
+        this.imgObj = imgObj; 
+        document.getElementById('select').innerHTML = `
+            <option>Select a collection</option>
+                ${this.collectionsNames.map((collName)=> { 
+                return `<option>${collName}</option>`; 
+                }) 
+            }  
+        `
     }
 }

@@ -1,6 +1,6 @@
 import { Alert } from './alert';
 
-export class DeleteCollAlert extends Alert {
+export class AlertDeleteColl extends Alert {
     constructor(btnArray, deleteFunc, collName) {
         super();
         this.deleteFunc = deleteFunc;
@@ -13,13 +13,10 @@ export class DeleteCollAlert extends Alert {
         btnArray.map((btn)=> {
             document.getElementById(`${btn}-id`).addEventListener('click', ()=> {
                 if(`${btn}-id` === 'Yes-id') {
-                    this.deleteFunc(`${collName}-remove`, collName);
+                    this.deleteFunc(`${collName}-cell`, collName);
                     this.removeAlert();
                 } else { this.removeAlert(); }
             })
         })
-    }
-    removeAlert() {
-        document.getElementById('alertModal').remove();
     }
 }

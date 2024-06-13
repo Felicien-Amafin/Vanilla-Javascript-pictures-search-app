@@ -28,4 +28,5 @@ export class Ui {
     }
     static showSearchFeedBack() { document.getElementById('searchFeedback').classList.remove('none'); }
     static hideSearchFeedBack() { document.getElementById('searchFeedback').classList.add('none'); }
+    static deleteImgWidget(){}
 }

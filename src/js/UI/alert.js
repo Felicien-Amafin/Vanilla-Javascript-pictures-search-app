@@ -17,4 +17,7 @@ export class Alert {
         `
         root.insertAdjacentElement('beforeend', alertModal);
     }
+    removeAlert() {
+        document.getElementById('alertModal').remove();
+    }
 }

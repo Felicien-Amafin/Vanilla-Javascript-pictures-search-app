@@ -1,4 +1,4 @@
-import { DeleteCollAlert } from "./deleteCollAlert";
+import { AlertDeleteColl } from "./alertDeleteColl";
 import { Database } from "../data/database";
 import { Ui } from "./userInterface";
 
@@ -29,7 +29,7 @@ export class Collection {
                     console.log('Loading collection'); //Load collection from database
                 } else { 
                     //Display Alert to confirm deletion 'when trash icon' is clicked
-                    new DeleteCollAlert(['Yes', 'No'], this.delete.bind(this), `${collName}`); 
+                    new AlertDeleteColl(['Yes', 'No'], this.delete.bind(this), `${collName}`); 
                 }
             })
         })

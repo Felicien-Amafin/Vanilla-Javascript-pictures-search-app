@@ -51163,17 +51163,22 @@ class Database {
     }
     static async createColl(sortedCollNames, collName, data, userId) {
         const docRef = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.doc)(db, 'users', `${userId}`);
-        //In database : update collectionsNames array in database
+        //In database : update collectionsNames array 
         await (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.updateDoc)(docRef, { "collectionsNames": sortedCollNames});
         //In database: Create a document in a collection named "collections" + assigned data to document
         await (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.setDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.doc)(db, 'users', `${userId}`, 'collections', `${collName}`), { pictures: (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.arrayUnion)(data) });
     }
     static async deleteColl(collectionsNames, collName, userId) {
         const docRef = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.doc)(db, 'users', `${userId}`);
-        //In database : update collectionsNames array in database
+        //In database : update collectionsNames array
         await (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.updateDoc)(docRef, {"collectionsNames": collectionsNames});
         //Delete collection specified by user
         await (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.deleteDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.doc)(db,'users', `${userId}`, 'collections', `${collName}`));
+    }
+    static async updateColl(imgObj, collName, userId) {
+        const docRef = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.doc)(db, 'users', `${userId}`, 'collections', `${collName}`);
+        //In database : update pictures array in collName doc
+        await (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.updateDoc)(docRef, {"pictures": (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.arrayUnion)(imgObj)});
     }
 }
 
@@ -51305,6 +51310,77 @@ class Alert {
         `
         root.insertAdjacentElement('beforeend', alertModal);
     }
+    removeAlert() {
+        document.getElementById('alertModal').remove();
+    }
+}
+
+/***/ }),
+
+/***/ "./src/js/ui/alertAddColl.js":
+/*!***********************************!*\
+  !*** ./src/js/ui/alertAddColl.js ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   AlertAddColl: () => (/* binding */ AlertAddColl)
+/* harmony export */ });
+/* harmony import */ var _alert__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./alert */ "./src/js/ui/alert.js");
+
+
+class AlertAddColl extends _alert__WEBPACK_IMPORTED_MODULE_0__.Alert {
+    constructor(btnArray, message) {
+        super();
+        this.btnName = btnArray[0];
+        this.message = message;
+        this.create(btnArray, this.message);
+        this.addEvListener();
+    }
+    addEvListener() {
+        const btn = document.getElementById(`${this.btnName}-id`);
+        btn.addEventListener('click', ()=> {
+            this.removeAlert();
+        })
+    }
+}
+
+
+/***/ }),
+
+/***/ "./src/js/ui/alertDeleteColl.js":
+/*!**************************************!*\
+  !*** ./src/js/ui/alertDeleteColl.js ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   AlertDeleteColl: () => (/* binding */ AlertDeleteColl)
+/* harmony export */ });
+/* harmony import */ var _alert__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./alert */ "./src/js/ui/alert.js");
+
+
+class AlertDeleteColl extends _alert__WEBPACK_IMPORTED_MODULE_0__.Alert {
+    constructor(btnArray, deleteFunc, collName) {
+        super();
+        this.deleteFunc = deleteFunc;
+        this.collName = collName;
+        this.title = `Are you sure you want to delete "${this.collName}" ?`;
+        this.create(btnArray, this.title);
+        this.addEvListener(btnArray, this.collName);
+    }
+    addEvListener(btnArray, collName) {
+        btnArray.map((btn)=> {
+            document.getElementById(`${btn}-id`).addEventListener('click', ()=> {
+                if(`${btn}-id` === 'Yes-id') {
+                    this.deleteFunc(`${collName}-cell`, collName);
+                    this.removeAlert();
+                } else { this.removeAlert(); }
+            })
+        })
+    }
 }
 
 /***/ }),
@@ -51319,7 +51395,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   Collection: () => (/* binding */ Collection)
 /* harmony export */ });
-/* harmony import */ var _deleteCollAlert__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./deleteCollAlert */ "./src/js/ui/deleteCollAlert.js");
+/* harmony import */ var _alertDeleteColl__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./alertDeleteColl */ "./src/js/ui/alertDeleteColl.js");
 /* harmony import */ var _data_database__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../data/database */ "./src/js/data/database.js");
 /* harmony import */ var _userInterface__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./userInterface */ "./src/js/ui/userInterface.js");
 
@@ -51353,7 +51429,7 @@ class Collection {
                     console.log('Loading collection'); //Load collection from database
                 } else { 
                     //Display Alert to confirm deletion 'when trash icon' is clicked
-                    new _deleteCollAlert__WEBPACK_IMPORTED_MODULE_0__.DeleteCollAlert(['Yes', 'No'], this.delete.bind(this), `${collName}`); 
+                    new _alertDeleteColl__WEBPACK_IMPORTED_MODULE_0__.AlertDeleteColl(['Yes', 'No'], this.delete.bind(this), `${collName}`); 
                 }
             })
         })
@@ -51389,6 +51465,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _form__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./form */ "./src/js/ui/form.js");
 /* harmony import */ var _data_database__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../data/database */ "./src/js/data/database.js");
 /* harmony import */ var _userInterface__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./userInterface */ "./src/js/ui/userInterface.js");
+/* harmony import */ var _alertAddColl__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./alertAddColl */ "./src/js/ui/alertAddColl.js");
+
 
 
 
@@ -51399,7 +51477,7 @@ class CollectionForm extends _form__WEBPACK_IMPORTED_MODULE_0__.Form{
         this.root = document.getElementById(`${rootId}`);
         this.userData = userData;
         this.userId = userId;
-        this.collectionsNames = userData.collectionsNames;
+        this.collectionsNames = this.userData.collectionsNames; //Init collectionsNames
         this.formStatus;
         this.imgObj;
         this.trackFeedBackId;
@@ -51417,7 +51495,7 @@ class CollectionForm extends _form__WEBPACK_IMPORTED_MODULE_0__.Form{
         this.addMenuClickEv('menuTab1', 'menuTab2', this.createTab.bind(this));
         this.addMenuClickEv('menuTab2', 'menuTab1', this.updateTab.bind(this));
         this.formStatus = 'create'; //Init formStatus
-        this.initFormContent('form');
+        this.initFormContent('form', this.collectionsNames);
         this.addEventLis();
     }
     //Form's tab to create new img collection
@@ -51430,12 +51508,16 @@ class CollectionForm extends _form__WEBPACK_IMPORTED_MODULE_0__.Form{
         this.updateForm([], ['selectColl', 'collNameInput'], 'form__element--hidden');
         this.formStatus = 'update';
     }
-    initFormContent(formId) {
+    initFormContent(formId, collectionsNames) {
         document.getElementById(`${formId}`).innerHTML = `
         <input class="form__input tab" type="text" id="collNameInput" placeholder="Chose collection's name" autocomplete="off">
         <div class="form__selection tab form__element--hidden" id="selectColl">
             <select name="collection-select" id="select">
-                <option>Select a collection</option>   
+                <option>Select a collection</option>
+                 ${collectionsNames.map((collName)=> { 
+                    return `<option>${collName}</option>`; 
+                    }) 
+                }   
             </select>
             <i class="selectArrow fa-solid fa-caret-down"></i>
         </div>
@@ -51447,7 +51529,7 @@ class CollectionForm extends _form__WEBPACK_IMPORTED_MODULE_0__.Form{
             event.preventDefault(); //Prevents to submit the form if user clicks enter when using collectionForm
         });
         document.getElementById('formBtn').addEventListener('click', ()=> {
-            this.formStatus === 'create' ? this.createColl(this.imgObj) : this.updateColl();
+            this.formStatus === 'create' ? this.createColl(this.imgObj) : this.updateColl(this.imgObj);
         }); 
     }
     async createColl(imgObj) { //Create new img collection
@@ -51463,11 +51545,26 @@ class CollectionForm extends _form__WEBPACK_IMPORTED_MODULE_0__.Form{
                 await _data_database__WEBPACK_IMPORTED_MODULE_1__.Database.createColl(sortedCollNames, collName, imgObj, this.userId);
                 this.collectionsNames = sortedCollNames;
                 _userInterface__WEBPACK_IMPORTED_MODULE_2__.Ui.addCollection(this.collectionsNames, collName);
-                this.feedback('validation', `"${collName}" has been added as new collection!`);
+                this.hideCollForm();
+                new _alertAddColl__WEBPACK_IMPORTED_MODULE_3__.AlertAddColl(['Ok'], `Picture has been added to ${collName}!`);
             } catch(error) { this.feedback('errorList', `${error}`); }
         } 
     }
-    updateColl() {} //Update existing img collection
+    async updateColl(imgObj) { //Update existing img collection
+        const collName = document.getElementById('select').value;
+        this.resetFeedback('errorList') // Reset feedback if needed
+        if(collName === 'Select a collection') {
+            this.feedback('errorList', 'Please, select a collection');
+            return;
+        }
+        try {
+            document.getElementById('formBtn').disabled = true;
+            await _data_database__WEBPACK_IMPORTED_MODULE_1__.Database.updateColl(imgObj, collName, this.userId);
+            this.hideCollForm();
+            document.getElementById('formBtn').disabled = false;
+            new _alertAddColl__WEBPACK_IMPORTED_MODULE_3__.AlertAddColl(['Ok'], `Picture has been added to ${collName}!`);
+        } catch(error) { this.feedback('errorList', `${error}`); }
+    } 
     
     getCollName(inputId) { //Get collection's name form input
         let inputValue = document.getElementById(`${inputId}`).value;
@@ -51506,48 +51603,17 @@ class CollectionForm extends _form__WEBPACK_IMPORTED_MODULE_0__.Form{
         this.resetFeedback(this.trackFeedBackId);
         document.getElementById('formModal').classList.remove('formModal--slide'); 
     }
-    display(imgObj) { // Display form
+    display(imgObj) {
+        //Update imgObj variable every display + update collections' selection
         document.getElementById('formModal').classList.add('formModal--slide');
-        this.imgObj = imgObj;
-    }
-}
-
-/***/ }),
-
-/***/ "./src/js/ui/deleteCollAlert.js":
-/*!**************************************!*\
-  !*** ./src/js/ui/deleteCollAlert.js ***!
-  \**************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   DeleteCollAlert: () => (/* binding */ DeleteCollAlert)
-/* harmony export */ });
-/* harmony import */ var _alert__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./alert */ "./src/js/ui/alert.js");
-
-
-class DeleteCollAlert extends _alert__WEBPACK_IMPORTED_MODULE_0__.Alert {
-    constructor(btnArray, deleteFunc, collName) {
-        super();
-        this.deleteFunc = deleteFunc;
-        this.collName = collName;
-        this.title = `Are you sure you want to delete "${this.collName}" ?`;
-        this.create(btnArray, this.title);
-        this.addEvListener(btnArray, this.collName);
-    }
-    addEvListener(btnArray, collName) {
-        btnArray.map((btn)=> {
-            document.getElementById(`${btn}-id`).addEventListener('click', ()=> {
-                if(`${btn}-id` === 'Yes-id') {
-                    this.deleteFunc(`${collName}-remove`, collName);
-                    this.removeAlert();
-                } else { this.removeAlert(); }
-            })
-        })
-    }
-    removeAlert() {
-        document.getElementById('alertModal').remove();
+        this.imgObj = imgObj; 
+        document.getElementById('select').innerHTML = `
+            <option>Select a collection</option>
+                ${this.collectionsNames.map((collName)=> { 
+                return `<option>${collName}</option>`; 
+                }) 
+            }  
+        `
     }
 }
 
@@ -51813,6 +51879,7 @@ class Ui {
     }
     static showSearchFeedBack() { document.getElementById('searchFeedback').classList.remove('none'); }
     static hideSearchFeedBack() { document.getElementById('searchFeedback').classList.add('none'); }
+    static deleteImgWidget(){}
 }
 
 /***/ }),

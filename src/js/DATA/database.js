@@ -89,16 +89,21 @@ export class Database {
     }
     static async createColl(sortedCollNames, collName, data, userId) {
         const docRef = doc(db, 'users', `${userId}`);
-        //In database : update collectionsNames array in database
+        //In database : update collectionsNames array 
         await updateDoc(docRef, { "collectionsNames": sortedCollNames});
         //In database: Create a document in a collection named "collections" + assigned data to document
         await setDoc(doc(db, 'users', `${userId}`, 'collections', `${collName}`), { pictures: arrayUnion(data) });
     }
     static async deleteColl(collectionsNames, collName, userId) {
         const docRef = doc(db, 'users', `${userId}`);
-        //In database : update collectionsNames array in database
+        //In database : update collectionsNames array
         await updateDoc(docRef, {"collectionsNames": collectionsNames});
         //Delete collection specified by user
         await deleteDoc(doc(db,'users', `${userId}`, 'collections', `${collName}`));
+    }
+    static async updateColl(imgObj, collName, userId) {
+        const docRef = doc(db, 'users', `${userId}`, 'collections', `${collName}`);
+        //In database : update pictures array in collName doc
+        await updateDoc(docRef, {"pictures": arrayUnion(imgObj)});
     }
 }
