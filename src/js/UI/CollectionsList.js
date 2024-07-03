@@ -6,7 +6,8 @@ export class CollectionsList {
         this.collectionsNames = collectionsNames;
         this.init(this.collectionsNames);
     }
-    init(collectionsNames) { // Initializes collections' list
+    init(collectionsNames) { 
+        // Initializes collections' list when page loads
         if(collectionsNames.length === 0) { 
             this.handleDefaultMess(collectionsNames);
             return;
@@ -16,6 +17,7 @@ export class CollectionsList {
         });
     }
     addCollection(collectionsNames, collName) {
+        //Insert new collection cell in existing collection's list 
         const collNameIndex = collectionsNames.findIndex((name)=> { return name === `${collName}` });
         const prevIndex = collNameIndex - 1;
         const root = `${collectionsNames[prevIndex]}-cell`;
@@ -26,6 +28,7 @@ export class CollectionsList {
         }
     }
     handleDefaultMess(collectionsNames) { 
+        //Display default message if no collections in collection's list
         const collectionsList = document.getElementById('collectionsList');
         const defaulftMess = `No collections yet...`;
         if(collectionsNames.length === 0 && collectionsList.innerHTML === `${defaulftMess}`) {

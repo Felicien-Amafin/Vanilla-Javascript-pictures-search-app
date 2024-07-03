@@ -1,22 +1,22 @@
 import { Ui } from './userInterface';
 
 export class ImgWidget {
-    constructor(imgObj, icons, root ) {
-        this.imgObj = imgObj;
+    constructor(img, icons, root) {
+        this.img = img;
         this.icons = icons;
         this.root = root;
-        this.create(this.imgObj, this.root, this.icons);
+        this.create(this.img, this.root, this.icons);
     }
-    create(imgObj, root, icons) {
+    create(img, root, icons) {
         const widget = document.createElement('div');
         widget.classList.add('widget');
-        widget.id= `widget-${imgObj.id}`;
+        widget.id= `widget-${img.id}`;
         root.insertAdjacentElement('beforeend', widget);
         widget.innerHTML = `
-            <img loading="lazy" src=${imgObj.imgSrc}>
-            <ul class="iconBar">${this.addIcons(icons, imgObj.id)}</ul>
+            <img loading="lazy" src="${img.imgSrc}" alt="${img.title}">
+            <ul class="iconBar">${this.addIcons(icons, img.id)}</ul>
         `
-        this.addEventLstns(widget.id, imgObj, icons);
+        this.addEventLstns(widget.id, img, icons);
     }
     addIcons(icons, imgObjId) {
         let iconBar = '';
@@ -28,16 +28,16 @@ export class ImgWidget {
         })
         return iconBar;
     }
-    addEventLstns(widgetId, imgObj, icons) {
+    addEventLstns(widgetId, img, icons) {
         const widget = document.getElementById(`${widgetId}`);
         widget.querySelector('img').addEventListener('click', ()=> {
-            Ui.imgModal.display(this.imgObj);
+            Ui.displayImgModal(img);
         })
         icons.map((icon)=> {
-            const iconElmt = widget.querySelector(`#${icon.name}-${imgObj.id}`);
+            const iconElmt = widget.querySelector(`#${icon.name}-${img.id}`);
             iconElmt.addEventListener(`${icon.event}`,(event)=> {
                 icon.prevDefault ? event.preventDefault() : null;
-                icon.func(this.imgObj);
+                icon.func(img);
             });
         }) 
     }

@@ -16,6 +16,7 @@
         color: var(--white);
         font-size: 1.5625rem;
         font-weight: 600;
+        cursor: pointer;
         @include breakpoint (medium) { font-size: 1.875rem; }
         @include breakpoint (large) { font-size: 2.1875rem; }
     }

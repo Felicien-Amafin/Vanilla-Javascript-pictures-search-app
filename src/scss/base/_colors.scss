@@ -1,27 +1,23 @@
 :root {
+    --black-Transparent: rgba(3, 3, 3, 0.596);
     --black: black;
     --white: white;
     --lightGray: lightgrey;
     --whitesmoke: whitesmoke;
-    //HomePage
-    --homeP-overlay:  rgba(0, 0, 0, 0.212);
-    --advert: rgb(219, 218, 218);
-    --homeP-btnBckGrd:  rgba(211, 211, 211, 0.534);
-    --homeP-btnBorder: rgb(129, 129, 129);
-    --homeP-btnText: var(--black);
-    --formModal-BckGrd: var(--black);
-    --formWindow-border: rgba(209, 206, 206, 0.445);
+    //Form
     --formWindow-title: rgb(209, 206, 206);
-    --form-tab: rgba(245, 245, 245, 0.712);
+    --form-tab: rgba(245, 245, 245, 0.219);
     --form-btnBck: transparent;
     --form-btnText:  var(--whitesmoke);
     --form-btnBckHover: whitesmoke;
     --form-btnTextHover: var(--black);
-    --error : rgb(100, 3, 3);
-    --validation: rgb(19, 175, 19);
+    --error : rgb(146, 68, 146);
+    --validation: var(--lightGray);
     --menuTabSelected: var(--whitesmoke);
-    --menuTabHighlight: rgba(211, 211, 211, 0.24);
+    --menuTabSelect: rgba(211, 211, 211, 0.24);
     //UserPage
+    --banner-overlay:  rgba(0, 0, 0, 0.596);
+    --collItems-overlay: rgba(0, 0, 0, 0.459);
     --header: var(--black);
     --headerBoxShadow: rgba(51, 50, 50, 0.658);
     --headerTitle: var(--black);
@@ -37,7 +33,5 @@
     --menuScrollBar:  rgb(46, 46, 46);
     --menuCellText: rgb(214, 213, 213);
     --menuCellHover: rgba(43, 42, 42, 0.603);
-    --banner-overlay:  rgba(0, 0, 0, 0.342);
-    --collItems-overlay: rgba(0, 0, 0, 0.459);
     --iconListIcon: rgba(0, 0, 0, 0.582);
 }

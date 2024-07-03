@@ -1,18 +1,19 @@
 export class Form {
-    constructor() { this.modal = this.createModal(); }
-    createModal() {
+    createModal(classList) {
+        //Create form Modal container 
         const modal = document.createElement('section');
-        modal.classList.add('formModal');
+        modal.classList.add(...classList);
         modal.id = 'formModal';
         return modal;
     }
     createFormWind(titleTxt, menuTab1Txt, menuTab2Txt, btnTxt) {
+        //Create form's window inside container
         return `
             <div class="formWindow">
                 <h2 class="formWindow__title" id="formTitle">${titleTxt}</h2>
                 <menu class="formMenu">
                     <li class="tab selected" id="menuTab1">${menuTab1Txt}</li>
-                    <li class="tab hightlight" id="menuTab2">${menuTab2Txt}</li>
+                    <li class="tab select" id="menuTab2">${menuTab2Txt}</li>
                 </menu>
                 <div class="formWindow__flex">
                     <form class="form" id="form"></form>
@@ -24,17 +25,19 @@ export class Form {
         `
     }
     addMenuClickEv(firstElmtId, secondElmtId, firstElmtFunc) {
+        //Hight light selected tab in form window's menu
         const firstElmt = document.getElementById(`${firstElmtId}`);
         const secondElmt = document.getElementById(`${secondElmtId}`);
         firstElmt.addEventListener('click', ()=> {
             if(secondElmt.classList.contains('selected')) {
-                secondElmt.classList.replace('selected', 'hightlight');
-                firstElmt.classList.replace('hightlight','selected');
+                secondElmt.classList.replace('selected', 'select');
+                firstElmt.classList.replace('select','selected');
                 firstElmtFunc();
             }
         });
     }
     updateForm(inputToClear, inputToToggle, maskingClass) {
+        //Hide or show form's elements (when clickin on menu's tabs)
         const errorList = document.getElementById('errorList');
         const validation = document.getElementById('validation');
         inputToClear.forEach(id => {

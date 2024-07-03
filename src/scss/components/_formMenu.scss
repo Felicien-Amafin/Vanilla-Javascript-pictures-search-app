@@ -21,10 +21,10 @@
         color: var(--black);
         background-color: var(--menuTabSelected);
     }
-    .hightlight {
+    .select {
         color: var(--white);
         &:hover {
-            background-color: var(--menuTabHighlight);
+            background-color: var(--menuTabSelect);
         }
     }
 }

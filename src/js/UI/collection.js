@@ -1,6 +1,9 @@
 import { AlertDeleteColl } from "./alertDeleteColl";
 import { Database } from "../data/database";
 import { Ui } from "./userInterface";
+import { ImgGallery } from "./imgGallery";
+import { icons } from '../data/imgData';
+import { route } from '../router';
 
 export class Collection {
     constructor(collName, root, position, userId) {
@@ -26,26 +29,34 @@ export class Collection {
         ids.map((id)=> {
             document.getElementById(`${id}`).addEventListener('click', ()=> {
                 if(id === `${collName}`) { 
-                    console.log('Loading collection'); //Load collection from database
-                } else { 
+                    const state = { mode: 'collection', keyword: `${collName}` };
+                    route(state);
+                    document.getElementById('menu').classList.remove('menu--visible');
+                    this.loadCollContent(collName); //Load collection from database
+                } 
+                if(id === `${collName}-remove`) { 
                     //Display Alert to confirm deletion 'when trash icon' is clicked
-                    new AlertDeleteColl(['Yes', 'No'], this.delete.bind(this), `${collName}`); 
+                    new AlertDeleteColl(['Yes', 'No'], Ui.deleteColl, `${collName}`, this.userId); 
                 }
             })
         })
     }
-    async delete(cellToRemove, collName) {
+    async loadCollContent(collName) {
         try {
-            const collectionsNames = Ui.collForm.collectionsNames;
-            const newArray = collectionsNames.filter((name)=> { 
-                return name !== collName;
-            })
-            await Database.deleteColl(newArray, collName, this.userId); //Remove Collection from Database
-            document.getElementById(`${cellToRemove}`).remove(); //Remove collection from the DOM
-            Ui.collForm.collectionsNames = [...newArray]; //Update collectionNames in collectionForm 
-            Ui.collList.handleDefaultMess(newArray); //Display default message if needed
-        } catch(error) {
-            alert("Sorry can't delete collection");
+            window.scrollY > 0 ? scrollTo(0,0) : null;
+            const data = await Database.getColl(collName, this.userId);
+            Ui.activeColl.collName = collName;
+            Ui.activeColl.data = data.pictures; 
+            Ui.activeColl.userId = this.userId;
+            Ui.showLoadingMess();
+            Ui.hideStartingPageElmts(); //If needed
+            Ui.deleteGalleryContent();
+            Ui.hideLoadMoreBtn(); //If needed
+            Ui.changeGalleryTitle(`"${collName}" collection`);
+            new ImgGallery(data.pictures, [icons.expand, icons.delete, icons.download]);
+            Ui.hideLoadingMess();
+        } catch {
+            alert(`Cannot load ${collName}`)
         }
     }
 }

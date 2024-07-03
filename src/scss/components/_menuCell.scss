@@ -2,7 +2,7 @@
     @include flexRow;
     width: 100%;
     height: auto;
-    padding: 16px;
+    padding: 0 16px;
     list-style: none;
     text-align: center;
     cursor: pointer;
@@ -12,17 +12,23 @@
     margin-bottom: 14px;
     border-radius: 4px;
     @include breakpoint(medium) { font-size: 1rem;}
-    &:hover { background-color: var(--menuCellHover); }
-    &:hover &__icon { visibility: visible; }
-    &:hover &__text { color: var(--white); }
+    @include breakpoint(large) { 
+        &:hover { background-color: var(--menuCellHover); }
+        &:hover &__icon { visibility: visible; }
+        &:hover &__text { color: var(--white); }
+    }
+ 
     &__text {
+        padding: 16px 0;
         width: 90%;
-        text-align: center;
+        height: 100%;
     }
     &__icon {
+        padding: 16px 0;
         width: 10%;
+        height: 100%;
         text-align: center;
-        visibility: hidden;
+        @include breakpoint(large) { visibility: hidden; }
         &:hover { color: var(--white); }
     }
 }

@@ -1,19 +1,15 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const clean = require('clean-webpack-plugin');
-const loader = require('sass-loader');
-const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-    mode: 'development',
-    entry: {
-        user: "./src/js/user.js",
-    },
+    mode: 'production',
+    entry: { user: "./src/js/user.js" },
     output: {
-        filename: "[name].js",
         path: path.resolve(__dirname, 'dist'),
+        filename: "[name].js",
     },
-    devtool: 'source-map',
+    devtool: false,
     devServer: {
         static: {
             directory: path.resolve(__dirname, 'dist')
@@ -48,7 +44,7 @@ module.exports = {
                         }
                     }
                 ] */
-            },
+            }
         ]
     },
     plugins: [
@@ -58,6 +54,6 @@ module.exports = {
             template: './src/html/index.html',
             chunks: ['user'],
         }),
-        new clean.CleanWebpackPlugin(), 
+        new clean.CleanWebpackPlugin(),
     ]
 }

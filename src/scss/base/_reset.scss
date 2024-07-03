@@ -20,6 +20,10 @@ main {
 }
 .block { display: block; }
 .none { display: none; }
+.hidden { 
+    position: fixed;
+    visibility: hidden; 
+}
 //Animations
 @keyframes translateCard {
     from { transform: translateY(-200px) };

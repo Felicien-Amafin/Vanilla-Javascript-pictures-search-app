@@ -1,13 +1,14 @@
 import { ImgWidget } from "./imgWidget";
 
 export class ImgGallery {
-    constructor(imgArray, icons) {
-        this.imgArray = imgArray;
+    constructor(imgs, icons) {
+        this.imgs = imgs;
         this.icons = icons;
         this.root = document.querySelector('.gallery__pictures');
-        this.renderImgWidgets(this.imgArray, this.icons, this.root);
+        this.renderImgWidgets();
     }
-    renderImgWidgets(imgArray, icons, root) { 
-        imgArray.forEach(imgObj => { new ImgWidget(imgObj, icons, root); });
+    renderImgWidgets() {
+        //Render img widgets in picture's gallery 
+        this.imgs.forEach((img) => { new ImgWidget(img, this.icons, this.root); });
     }
 }

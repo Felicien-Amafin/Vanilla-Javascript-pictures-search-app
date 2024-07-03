@@ -5,14 +5,15 @@ export class AuthForm extends Form{
     constructor(rootId) {
         super();
         this.root = document.getElementById(`${rootId}`);
+        this.modal = this.createModal(['formModal', 'formModal--transparentBlack', 'formModal--visible']); // createModal is in Form class
         this.credentials = { userName: '', emailAdress: '', password: ''};
         this.formStatus;
-        this.createAuth(this.root, this.modal); 
+        this.create(this.root, this.modal); 
     }
-    createAuth(root, modal) {
+    create(root, modal) {
+        //Create authentication form
         root.insertAdjacentElement('beforeend', modal);
         modal.innerHTML = `${this.createFormWind('Connection', 'Sign up', 'Log in', 'Sign up')}`;
-        this.matchWindFormat(modal);
         this.addMenuClickEv('menuTab1', 'menuTab2', this.signUpTab.bind(this));
         this.addMenuClickEv('menuTab2', 'menuTab1', this.logInTab.bind(this));
         this.formStatus = 'Sign up'; //Init form status;
@@ -32,21 +33,14 @@ export class AuthForm extends Form{
             pwdRecovery.disabled = true;  //Prevent displaying multiple pwdRecoveryModals by clicking enter
         });
     }
-    matchWindFormat(modal) {
-        if(window.matchMedia("(min-width: 992px)").matches) {
-            modal.classList.toggle('formModal--static');
-        } else {
-            document.querySelector('.mainPage__btn').addEventListener('click', ()=> {
-                modal.classList.toggle('formModal--slide');
-            })
-        }
-    }
     signUpTab() {
+        //Display form's elements to allow sign up
         this.formStatus = 'Sign up';
         this.updateForm(['userName', 'emailAdress', 'password'], ['userName', 'pwdRecovery'], 'form__element--hidden');
         this.updateBtnTxt('Sign up');
     } 
     logInTab() {
+        //Display form's elements to allow log in
         this.formStatus = 'Log in';
         this.updateForm(['userName','emailAdress', 'password'], ['userName', 'pwdRecovery'], 'form__element--hidden');
         this.updateBtnTxt('Log in');
@@ -54,30 +48,32 @@ export class AuthForm extends Form{
     }
     updateBtnTxt(btnTxt) { document.getElementById('formBtn').textContent = btnTxt; }
     initFormContent(formId) {
+        //Initialize form with elements at first rendering
         document.getElementById(`${formId}`).innerHTML = `
             <input class="tab form__input " type="text" id="userName" placeholder="User name" autocomplete="off">
-            <input class="tab form__input " type="text" id="emailAdress" placeholder="Email address" autocomplete="off">
+            <input class="tab form__input " type="email" id="emailAdress" placeholder="Email address" autocomplete="off">
             <div class="form__password">
                 <input class="tab form__input " type="password" id="password" placeholder="Password" autocomplete="off">
                 <i class="eyeIcon eyeIcon--gray fa-solid fa-eye"></i>
             </div>
         `
     }
-    togglePwdVisible() { 
+    togglePwdVisible() {
+        //Toggles password's visibility 
         const eyeIcon = document.querySelector('.eyeIcon');
         const password = document.getElementById('password');
         eyeIcon.classList.toggle('eyeIcon--white');
         password.type = password.type === 'password' ? 'text' : 'password';
     }
     credProcessing() {
+        //Process user credentials 
         const logIn = [{id: 'password', minLength: 8}];
         const signUp = [{id: 'userName', minLength: 6}, {id: 'password', minLength: 8}];
         if(this.formStatus === 'Log in') { 
             this.checkCredentials(logIn) ? Database.logIn(this.credentials) : null;
         } else { 
             this.checkCredentials(signUp) ? Database.signUp(this.credentials): null;
-            //Reset validation
-            const validation = document.getElementById('validation');
+            const validation = document.getElementById('validation'); //Reset validation feedback
             if(!validation.classList.contains('form__element--hidden')) { validation.classList.add('form__element--hidden'); }
         }
     } 
@@ -89,9 +85,10 @@ export class AuthForm extends Form{
         return status1 && status2;
     }
     checkMinLength(objArray) {
+        //Check input length + display error message if input length < minlength
         const errorList = document.getElementById('errorList');
         let status = 1;
-        if(errorList.innerHTML !== '') { errorList.innerHTML = '';}
+        if(errorList.innerHTML !== '') { errorList.innerHTML = '';} //Reset errorList
         objArray.forEach((obj)=> {
             const elmt = document.getElementById(`${obj.id}`);
             const elmtValue = elmt.value.trim(); 
@@ -145,6 +142,6 @@ export class AuthForm extends Form{
         if(errorField.innerHTML !== '') { errorField.innerHTML = '';}
         if(confirmation.innerHTML !== '') { confirmation.innerHTML = '';}
         if(!confirmation.classList.contains('form__element--hidden')) { confirmation.classList.add('form__element--hidden') }
-        this.checkEmailAformat('recoveryEaddress', 'errorField') ? Database.sendRecoveryMail('recoveryEaddress') : null;
+        if(this.checkEmailAformat('recoveryEaddress', 'errorField')) { Database.sendRecoveryMail('recoveryEaddress'); }
     }
 }

@@ -1,17 +1,18 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore,doc, setDoc, getDoc, arrayUnion, updateDoc, deleteDoc } from 'firebase/firestore';
+import { getFirestore,doc, setDoc, getDoc, arrayUnion, arrayRemove, updateDoc, deleteDoc } from 'firebase/firestore';
 import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, signOut, 
 signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
-import { update } from 'firebase/database';
+import { User } from "../user";
+
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCcWnL_SC90lEvWPPWEp6gxdKblxhyeq4g",
-    authDomain: "pixavenue-eb1a0.firebaseapp.com",
-    projectId: "pixavenue-eb1a0",
-    storageBucket: "pixavenue-eb1a0.appspot.com",
-    messagingSenderId: "336575541772",
-    appId: "1:336575541772:web:8295abf33d95aae02b7429",
-    measurementId: "G-8EJ24F8EYN"
+    apiKey: "AIzaSyCli4L6hauf3gs1Uy7-F53bX6sTpP8-YB0",
+    authDomain: "pixavenue-cf23c.firebaseapp.com",
+    projectId: "pixavenue-cf23c",
+    storageBucket: "pixavenue-cf23c.appspot.com",
+    messagingSenderId: "707421119131",
+    appId: "1:707421119131:web:1e8b17b4138ac716b29c3e",
+    measurementId: "G-XWP8J6E47E"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -25,7 +26,7 @@ export class Database {
             const userCred = await createUserWithEmailAndPassword(auth, cred.emailAdress, cred.password);
             await setDoc(doc(db, "users", userCred.user.uid), { 
                 userName: `${cred.userName}`, 
-                collectionsNames: [], 
+                collectionsNames: [],
             });
             await sendEmailVerification(userCred.user);
             const mess = `Complete your sign up by clicking on the link sent at ${userCred.user.email}`;
@@ -50,7 +51,11 @@ export class Database {
             } 
             const docId = userCred.user.uid;
             sessionStorage.setItem('user', JSON.stringify(docId));
-            window.location.replace('../../dist/user.html');
+            const userId = JSON.parse(sessionStorage.getItem('user')); 
+            this.getUser(userId) // Get user from firestore
+            .then((userData)=> {
+                User.unlockUserPage(userData, userId);
+            })
         } catch(error) {
             const mess = error.code === 'auth/invalid-credential'? 'Invalid password or email address.': error.code;
             this.feedbackMess('errorList', mess);
@@ -58,11 +63,13 @@ export class Database {
         }
     }
     static feedbackMess(feedbackId, mess) {
+        //Display feedback message after user has entered input
         const feedback = document.getElementById(`${feedbackId}`);
         feedback.classList.remove('form__element--hidden');
         feedback.innerHTML = `${mess}`;
     }
     static async getUser(userId) {
+        //Get user data in firestore 
         try {
             const userRef= doc(db, "users", userId);
             const userSnap = await getDoc(userRef);
@@ -85,25 +92,36 @@ export class Database {
     }
     static logOut() { 
         signOut(auth);
-        window.location.replace('../../dist/index.html'); 
+        window.location.replace(`${location.href}`); 
     }
     static async createColl(sortedCollNames, collName, data, userId) {
         const docRef = doc(db, 'users', `${userId}`);
-        //In database : update collectionsNames array 
+        //In firestore : update collectionsNames array 
         await updateDoc(docRef, { "collectionsNames": sortedCollNames});
-        //In database: Create a document in a collection named "collections" + assigned data to document
+        //In firestore: Create a document in a collection named "collections" + assigned data to document
         await setDoc(doc(db, 'users', `${userId}`, 'collections', `${collName}`), { pictures: arrayUnion(data) });
     }
     static async deleteColl(collectionsNames, collName, userId) {
         const docRef = doc(db, 'users', `${userId}`);
-        //In database : update collectionsNames array
+        //In firestore : update collectionsNames array
         await updateDoc(docRef, {"collectionsNames": collectionsNames});
         //Delete collection specified by user
         await deleteDoc(doc(db,'users', `${userId}`, 'collections', `${collName}`));
     }
-    static async updateColl(imgObj, collName, userId) {
+    static async updateColl(data, collName, userId) {
         const docRef = doc(db, 'users', `${userId}`, 'collections', `${collName}`);
-        //In database : update pictures array in collName doc
-        await updateDoc(docRef, {"pictures": arrayUnion(imgObj)});
+        //In firestore : update pictures array in collName doc
+        await updateDoc(docRef, {"pictures": arrayUnion(data)});
     }
+    static async getColl(collName, userId) {
+        const docRef = doc(db, 'users', `${userId}`, 'collections', `${collName}`);
+        const docSnap = await getDoc(docRef);
+        if(docSnap.exists()) { return docSnap.data(); }
+    }
+    static async deleteImg(data, collName, userId) {
+        const docRef = doc(db, 'users', `${userId}`, 'collections', `${collName}`);
+        //In firestore : update pictures array in collName doc
+        await updateDoc(docRef, {"pictures": arrayRemove(data)});
+    }
+    
 }
