@@ -28,20 +28,32 @@ stored on The Firebase Cloud Firestore service.
 ## Installation & Testing
 <br/>
 
-`To install the project: first run "npm install".To test the project: run "npm run dev"` or click here: https://pixavenue-cf23c.firebaseapp.com/
+`To install the project: first run "npm install".To test the project: run "npm run serv"` or click here: https://pixavenue-cf23c.firebaseapp.com/
 <br/>
 <br/>
 
 ## Preview
 <br/>
 
-<img align="left" src="https://github.com/user-attachments/assets/74413247-0cd0-4f5e-ac49-f787259f9958"  style="margin-bottom:20px;">
-<p>
-<img align="left" src="https://github.com/user-attachments/assets/a0765098-7863-4e87-9725-6df569d1fc05" style="margin:20px;">
-<p>
-<img align="left" src="https://github.com/user-attachments/assets/a892c0e3-9783-4025-a149-06aa8919f5f1" style="margin:20px;">
-<p>
-<img align="left" src="https://github.com/user-attachments/assets/6c166c6d-b638-483c-a7fc-a8c3ab6c66ef" style="margin:20px;">
-<p>
-<img align="left" src="https://github.com/user-attachments/assets/0710d9ff-1782-45ae-b09d-32b904e66e89" style="margin:20px;">
+![pixavenue11](https://github.com/user-attachments/assets/1fb4becd-2ccd-4ad9-a800-e86e195f8076)
+
+![pixavenue7](https://github.com/user-attachments/assets/e06dcfee-b64e-49c5-927c-97c717d791ce)
+
+![pixavenue9](https://github.com/user-attachments/assets/61906cd2-7283-4e5d-9b37-0b4640c12ba5)
+
+![pixavenue8](https://github.com/user-attachments/assets/894c20ab-f782-4d86-85fe-ccb592604d52)
+
+![pixavenue10](https://github.com/user-attachments/assets/d1792141-02f3-4f37-a7f2-156766bc092e)
+
+
+
+
+
+
+
+
+
+
+
+
 
