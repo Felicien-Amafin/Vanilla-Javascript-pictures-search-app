@@ -28,7 +28,7 @@ stored on The Firebase Cloud Firestore service.
 ## Installation & Testing
 <br/>
 
-`To install the project: first run "npm install".To test the project: run "npm run serv"` or click here: https://pixavenue-cf23c.firebaseapp.com/
+`To install the project: first run "npm install".To launcg the project in local server: run "npm run serv"` or click here: https://pixavenue-cf23c.firebaseapp.com/
 <br/>
 <br/>
 
